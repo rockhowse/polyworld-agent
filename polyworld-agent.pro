@@ -4,18 +4,22 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = polyworld-agent
 TEMPLATE = app
 
+INCLUDEPATH += . \
+               network \
 
 SOURCES += main.cpp\
-        polyworldagent.cpp
+        polyworldagent.cpp \
+    network/NetworkClient.cpp
 
-HEADERS  += polyworldagent.h
+HEADERS  += polyworldagent.h \
+    network/NetworkClient.h
 
 FORMS    += polyworldagent.ui
 
