@@ -2,6 +2,7 @@
 #include <QApplication>
 
 #include "NetworkClient.h"
+//#include "GetWorldFileClient.h"
 
 int main(int argc, char *argv[])
 {
@@ -9,8 +10,12 @@ int main(int argc, char *argv[])
     PolyworldAgent w;
     w.show();
 
+
     NetworkClient client;
     client.show();
-
+    /*
+    GetWorldFileClient  gwfc;
+    gwfc.start("192.168.1.2",27000,"./feed_young.wf");
+    */
     return a.exec();
 }

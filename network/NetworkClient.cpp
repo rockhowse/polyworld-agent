@@ -2,6 +2,7 @@
 
 #include <QtWidgets>
 #include <QtNetwork>
+#include <polyworldagent.h>
 
 #include "NetworkClient.h"
 
@@ -64,7 +65,9 @@ NetworkClient::NetworkClient(QWidget *parent)
     connect(getPolyworldMessageButton, SIGNAL(clicked()),
             this, SLOT(requestNewPolyworldMessage()));
     connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
-    connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readPolyworldMessage()));
+    //connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readPolyworldMessage()));
+    connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readFileData()));
+
     connect(tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(displayError(QAbstractSocket::SocketError)));
 
@@ -111,6 +114,28 @@ void NetworkClient::requestNewPolyworldMessage()
     tcpSocket->abort();
     tcpSocket->connectToHost(hostCombo->currentText(),
                              portLineEdit->text().toInt());
+}
+
+void NetworkClient::readFileData()
+{
+    QString filename = "./feed_yong.wf";
+
+    QFile file(filename);
+    if(!(file.open(QIODevice::Append)))
+    {
+        qDebug("File cannot be opened.");
+        exit(0);
+    }
+
+    QDataStream in(tcpSocket);
+    in.setVersion(QDataStream::Qt_4_0);
+
+    QByteArray read = tcpSocket->read(tcpSocket->bytesAvailable());
+    qDebug() << "Read    : " << read.size();
+    file.write(read);
+    file.close();
+
+    statusLabel->setText("Worldfile downloaded from server.");
 }
 
 void NetworkClient::readPolyworldMessage()

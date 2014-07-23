@@ -21,11 +21,12 @@ public:
 
 private slots:
     void requestNewPolyworldMessage();
-    void readPolyworldMessage();
     void displayError(QAbstractSocket::SocketError socketError);
     void enableGetPolyworldMessageButton();
     void sessionOpened();
 
+    void readFileData();
+    void readPolyworldMessage();
 private:
     QLabel *hostLabel;
     QLabel *portLabel;
