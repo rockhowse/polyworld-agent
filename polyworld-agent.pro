@@ -104,7 +104,20 @@ SOURCES += main.cpp\
     environment/BrickPatch.cp \
     environment/FoodPatch.cp \
     environment/FoodType.cp \
-    environment/Patch.cp
+    environment/Patch.cp \
+    app/FittestList.cp \
+    genome/groups/GroupsGene.cp \
+    genome/groups/GroupsGenomeSchema.cp \
+    genome/groups/GroupsSynapseType.cp \
+    genome/Gene.cp \
+    genome/GeneSchema.cp \
+    genome/GenomeLayout.cp \
+    genome/GenomeSchema.cp \
+    genome/GenomeUtil.cp \
+    genome/SeparationCache.cp \
+    graphics/gpolygon.cp \
+    graphics/gscene.cp \
+    graphics/gstage.cp
 
 HEADERS  += polyworldagent.h \
     network/NetworkClient.h \
@@ -189,7 +202,22 @@ HEADERS  += polyworldagent.h \
     environment/FoodPatch.h \
     environment/FoodType.h \
     environment/Patch.h \
-    app/Domain.h
+    app/Domain.h \
+    app/FittestList.h \
+    genome/groups/GroupsGene.h \
+    genome/groups/GroupsGenomeSchema.h \
+    genome/groups/GroupsSynapseType.h \
+    genome/Gene.h \
+    genome/GeneSchema.h \
+    genome/GenomeLayout.h \
+    genome/GenomeSchema.h \
+    genome/GenomeUtil.h \
+    genome/NeurGroupType.h \
+    genome/NeuronType.h \
+    genome/SeparationCache.h \
+    graphics/gpolygon.h \
+    graphics/gscene.h \
+    graphics/gstage.h
 
 FORMS    += polyworldagent.ui
 
