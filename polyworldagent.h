@@ -4,7 +4,7 @@
 #include <QMainWindow>
 
 namespace Ui {
-class PolyworldAgent;
+    class PolyworldAgent;
 }
 
 class PolyworldAgent : public QMainWindow
@@ -17,6 +17,7 @@ public:
 
 private:
     Ui::PolyworldAgent *ui;
+    void initFromWorldFile();
 };
 
 #endif // POLYWORLDAGENT_H
