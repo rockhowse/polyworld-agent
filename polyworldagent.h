@@ -18,6 +18,9 @@ public:
 private:
     Ui::PolyworldAgent *ui;
     void initFromWorldFile();
+
+public slots:
+    void appendStatus(const QString &statusText);
 };
 
 #endif // POLYWORLDAGENT_H

@@ -27,6 +27,7 @@ private slots:
 
     void readFileData();
     void readPolyworldMessage();
+
 private:
     QLabel *hostLabel;
     QLabel *portLabel;
@@ -42,6 +43,10 @@ private:
     quint16 blockSize;
 
     QNetworkSession *networkSession;
+
+signals:
+    void setStatus(const QString &newStatus);
+
 };
 
 

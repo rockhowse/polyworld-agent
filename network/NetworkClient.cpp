@@ -135,7 +135,7 @@ void NetworkClient::readFileData()
     file.write(read);
     file.close();
 
-    statusLabel->setText("Worldfile downloaded from server.");
+    emit setStatus("Worldfile downloaded from server.");
 }
 
 void NetworkClient::readPolyworldMessage()

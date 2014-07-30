@@ -32,7 +32,7 @@ PolyworldAgent::~PolyworldAgent()
     delete ui;
 }
 
-PolyworldAgent::initFromWorldFile():void
+void PolyworldAgent::initFromWorldFile()
 {
 
     srand(1);
@@ -91,3 +91,10 @@ PolyworldAgent::initFromWorldFile():void
 
     GenomeUtil::createSchema();
 }
+
+void PolyworldAgent::appendStatus(const QString &newStatus) {
+    if(ui->statusEdit && !newStatus.isEmpty()){
+        ui->statusEdit->append(newStatus);
+    }
+}
+
