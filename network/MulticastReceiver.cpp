@@ -79,7 +79,7 @@ void MulticastReceiver::processPendingDatagrams()
         datagram.resize(udpSocket->pendingDatagramSize());
         udpSocket->readDatagram(datagram.data(), datagram.size());
 
-        emit setStatus(tr("Received datagram: \"%1\"")
+        emit setStatus(tr("Polyworld-Server: \"%1\"")
                        .arg(datagram.data()));
 
         /*
