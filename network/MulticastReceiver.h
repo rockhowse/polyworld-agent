@@ -65,6 +65,9 @@ private:
     QPushButton *quitButton;
     QUdpSocket *udpSocket;
     QHostAddress groupAddress;
+
+signals:
+    void setStatus(const QString &newStatus);
 };
 
 #endif

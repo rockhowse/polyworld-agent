@@ -14,10 +14,12 @@ int main(int argc, char *argv[])
     NetworkClient networkClient;
     networkClient.show();
 
+    QObject::connect(&networkClient, SIGNAL(setStatus(QString)), &polyWorldAgent, SLOT(appendStatus(QString)));
+
     MulticastReceiver multicastReceiver;
     multicastReceiver.show();
 
-    QObject::connect(&networkClient, SIGNAL(setStatus(QString)), &polyWorldAgent, SLOT(appendStatus(QString)));
+    QObject::connect(&multicastReceiver, SIGNAL(setStatus(QString)), &polyWorldAgent, SLOT(appendStatus(QString)));
 
     /*
     GetWorldFileClient  gwfc;

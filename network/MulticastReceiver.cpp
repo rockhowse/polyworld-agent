@@ -78,7 +78,13 @@ void MulticastReceiver::processPendingDatagrams()
         QByteArray datagram;
         datagram.resize(udpSocket->pendingDatagramSize());
         udpSocket->readDatagram(datagram.data(), datagram.size());
-        statusLabel->setText(tr("Received datagram: \"%1\"")
+
+        emit setStatus(tr("Received datagram: \"%1\"")
+                       .arg(datagram.data()));
+
+        /*
+         statusLabel->setText(tr("Received datagram: \"%1\"")
                              .arg(datagram.data()));
+         */
     }
 }
