@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     networkClient.show();
 
 
-    QObject::connect(&networkClient, SIGNAL(setStatus()), &polyWorldAgent, SLOT(appendStatus()));
+    QObject::connect(&networkClient, SIGNAL(setStatus(QString)), &polyWorldAgent, SLOT(appendStatus(QString)));
 
     /*
     GetWorldFileClient  gwfc;
