@@ -117,7 +117,8 @@ SOURCES += main.cpp\
     genome/SeparationCache.cp \
     graphics/gpolygon.cp \
     graphics/gscene.cp \
-    graphics/gstage.cp
+    graphics/gstage.cp \
+    network/MulticastReceiver.cpp
 
 HEADERS  += polyworldagent.h \
     network/NetworkClient.h \
@@ -217,7 +218,8 @@ HEADERS  += polyworldagent.h \
     genome/SeparationCache.h \
     graphics/gpolygon.h \
     graphics/gscene.h \
-    graphics/gstage.h
+    graphics/gstage.h \
+    network/MulticastReceiver.h
 
 FORMS    += polyworldagent.ui
 

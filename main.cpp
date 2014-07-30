@@ -3,7 +3,7 @@
 #include <QtWidgets>
 
 #include "NetworkClient.h"
-//#include "GetWorldFileClient.h"
+#include "MulticastReceiver.h"
 
 int main(int argc, char *argv[])
 {
@@ -11,10 +11,11 @@ int main(int argc, char *argv[])
     PolyworldAgent polyWorldAgent;
     polyWorldAgent.show();
 
-
     NetworkClient networkClient;
     networkClient.show();
 
+    MulticastReceiver multicastReceiver;
+    multicastReceiver.show();
 
     QObject::connect(&networkClient, SIGNAL(setStatus(QString)), &polyWorldAgent, SLOT(appendStatus(QString)));
 
