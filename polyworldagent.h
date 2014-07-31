@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 
+// main stage used for rendering
+#include "gstage.h"
+
 namespace Ui {
     class PolyworldAgent;
 }
@@ -18,6 +21,11 @@ public:
 private:
     Ui::PolyworldAgent *ui;
     void initFromWorldFile();
+
+    // used for rendering
+    gstage fStage;
+
+    class MonitorManager *monitorManager;
 
 public slots:
     void appendStatus(const QString &statusText);

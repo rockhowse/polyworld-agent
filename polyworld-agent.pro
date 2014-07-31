@@ -31,6 +31,7 @@ INCLUDEPATH += . \
                genome/groups \
                genome/sheets \
 #               logs \
+               monitor \
                network \
                /usr/include/python2.7/
 
@@ -118,7 +119,13 @@ SOURCES += main.cpp\
     graphics/gpolygon.cp \
     graphics/gscene.cp \
     graphics/gstage.cp \
-    network/MulticastReceiver.cpp
+    network/MulticastReceiver.cpp \
+    monitor/AgentTracker.cp \
+    monitor/CameraController.cp \
+    monitor/Monitor.cp \
+    monitor/MonitorManager.cp \
+    monitor/MovieController.cp \
+    monitor/SceneRenderer.cp
 
 HEADERS  += polyworldagent.h \
     network/NetworkClient.h \
@@ -219,9 +226,17 @@ HEADERS  += polyworldagent.h \
     graphics/gpolygon.h \
     graphics/gscene.h \
     graphics/gstage.h \
-    network/MulticastReceiver.h
+    network/MulticastReceiver.h \
+    monitor/AgentTracker.h \
+    monitor/CameraController.h \
+    monitor/Monitor.h \
+    monitor/MonitorManager.h \
+    monitor/MovieController.h \
+    monitor/SceneRenderer.h
 
 FORMS    += polyworldagent.ui
 
 OTHER_FILES += \
-    README.md
+    README.md \
+    etc/worldfile.wfs \
+    etc/monitors.mfs

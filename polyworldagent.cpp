@@ -11,8 +11,12 @@
 #include "SeparationCache.h"
 #include "GenomeUtil.h"
 
+// Polyworld graphics
+#include "MonitorManager.h"
+
 #define POLYWORLD_SCHEMA_FILE_NAME "/home/mint/polyworld-agent/etc/worldfile.wfs"
 #define POLYWORLD_WORLD_FILE_NAME "feed_young.wf"
+
 
 // Define directory mode mask the same, except you need execute privileges to use as a directory (go fig)
 #define	PwDirMode ( S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH )
@@ -90,6 +94,11 @@ void PolyworldAgent::initFromWorldFile()
     SeparationCache::init();
 
     GenomeUtil::createSchema();
+
+    // ---
+    // --- Init Monitors
+    // ---
+    monitorManager = new MonitorManager( fStage, "/home/mint/polyworld-agent/etc/gui.mf");
 }
 
 void PolyworldAgent::appendStatus(const QString &newStatus) {
