@@ -95,6 +95,12 @@ void PolyworldAgent::initFromWorldFile()
 
     GenomeUtil::createSchema();
 
+    // Pass ownership of the cast to the stage [TODO] figure out ownership issues
+    fStage.SetCast(&fWorldCast);
+
+    // initialize the ground objects
+    InitGround();
+
     // ---
     // --- Init Monitors
     // ---
@@ -105,5 +111,18 @@ void PolyworldAgent::appendStatus(const QString &newStatus) {
     if(ui->statusEdit && !newStatus.isEmpty()){
         ui->statusEdit->append(newStatus);
     }
+}
+
+//---------------------------------------------------------------------------
+// PolyworldAgent::InitGround
+//---------------------------------------------------------------------------
+void PolyworldAgent::InitGround()
+{
+    Resources::loadPolygons( &fGround, "ground" );
+
+    fGround.sety(-fGroundClearance);
+    fGround.setscale(globals::worldsize);
+    fGround.setcolor(fGroundColor);
+    fWorldSet.Add(&fGround);
 }
 

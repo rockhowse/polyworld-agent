@@ -5,6 +5,7 @@
 
 // main stage used for rendering
 #include "gstage.h"
+#include "gpolygon.h"
 
 namespace Ui {
     class PolyworldAgent;
@@ -24,8 +25,14 @@ private:
 
     // used for rendering
     gstage fStage;
+    TCastList fWorldCast;
+
+    gpolyobj fGround;
+    TSetList fWorldSet;
 
     class MonitorManager *monitorManager;
+
+    void InitGround();
 
 public slots:
     void appendStatus(const QString &statusText);
