@@ -23,7 +23,7 @@ MonitorManager::MonitorManager(
         //DECOUPLED
         //TSimulation *_simulation,
                                 // pass in a stage instead of a simulation
-                                gstage * _mStage,
+                                gstage &_mStage,
         // END DECOUPLED
 								string monitorPath )
     //DECOUPLED
@@ -199,7 +199,7 @@ MonitorManager::MonitorManager(
 			// ---
 
             // use the local stage that should have been set from the public slot
-            SceneRenderer *renderer = new SceneRenderer(*mStage,
+            SceneRenderer *renderer = new SceneRenderer(mStage,
 														 cameraProperties,
 														 bufferWidth,
 														 bufferHeight );

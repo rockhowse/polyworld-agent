@@ -98,7 +98,7 @@ void PolyworldAgent::initFromWorldFile()
     // ---
     // --- Init Monitors
     // ---
-    monitorManager = new MonitorManager( fStage, "/home/mint/polyworld-agent/etc/gui.mf");
+    monitorManager = new MonitorManager( fStage, string("/home/mint/polyworld-agent/etc/gui.mf"));
 }
 
 void PolyworldAgent::appendStatus(const QString &newStatus) {
