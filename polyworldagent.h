@@ -28,6 +28,8 @@ private:
     TCastList fWorldCast;
 
     gpolyobj fGround;
+    float fGroundClearance;
+    Color fGroundColor;
     TSetList fWorldSet;
 
     class MonitorManager *monitorManager;

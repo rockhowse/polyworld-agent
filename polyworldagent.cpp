@@ -13,6 +13,7 @@
 
 // Polyworld graphics
 #include "MonitorManager.h"
+#include "Resources.h"
 
 #define POLYWORLD_SCHEMA_FILE_NAME "/home/mint/polyworld-agent/etc/worldfile.wfs"
 #define POLYWORLD_WORLD_FILE_NAME "feed_young.wf"
