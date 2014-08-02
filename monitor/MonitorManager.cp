@@ -144,7 +144,10 @@ MonitorManager::MonitorManager(
 	// --- Scenes
 	// ---
 	{
-		const char *scenes[] = { "MainScene", "OverheadScene", "FittestPOVScene" };
+        const char *scenes[] = { "MainScene"};
+        //FIX ME
+        //limiting to a single secne for now
+        //, "OverheadScene", "FittestPOVScene" };
 		int nscenes = sizeof(scenes) / sizeof(char*);
 
 		for( int iscene = 0; iscene < nscenes; iscene++ )

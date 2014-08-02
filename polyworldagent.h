@@ -21,7 +21,7 @@ public:
 
 private:
     Ui::PolyworldAgent *ui;
-    void initFromWorldFile();
+
 
     // used for rendering
     gstage fStage;
@@ -38,6 +38,8 @@ private:
 
 public slots:
     void appendStatus(const QString &statusText);
+    // called when the network client is finished downloading world file
+    void initFromWorldFile();
 };
 
 #endif // POLYWORLDAGENT_H

@@ -14,16 +14,16 @@ int main(int argc, char *argv[])
     NetworkClient networkClient;
     networkClient.show();
 
+    // update status from networkclient
     QObject::connect(&networkClient, SIGNAL(setStatus(QString)), &polyWorldAgent, SLOT(appendStatus(QString)));
+
+    // init world from world file after client has downloaded it
+    QObject::connect(&networkClient, SIGNAL(startWorldInit()), &polyWorldAgent, SLOT(initFromWorldFile()));
 
     MulticastReceiver multicastReceiver;
     multicastReceiver.show();
 
     QObject::connect(&multicastReceiver, SIGNAL(setStatus(QString)), &polyWorldAgent, SLOT(appendStatus(QString)));
 
-    /*
-    GetWorldFileClient  gwfc;
-    gwfc.start("192.168.1.2",27000,"./feed_young.wf");
-    */
     return a.exec();
 }

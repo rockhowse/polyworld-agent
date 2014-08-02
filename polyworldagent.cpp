@@ -16,7 +16,7 @@
 #include "Resources.h"
 
 #define POLYWORLD_SCHEMA_FILE_NAME "/home/mint/polyworld-agent/etc/worldfile.wfs"
-#define POLYWORLD_WORLD_FILE_NAME "feed_young.wf"
+#define POLYWORLD_WORLD_FILE_NAME "/home/mint/build-polyworld-agent-Desktop_Qt_5_3_0_GCC_64bit-Debug/feed_young.wf"
 
 
 // Define directory mode mask the same, except you need execute privileges to use as a directory (go fig)
@@ -39,7 +39,7 @@ PolyworldAgent::~PolyworldAgent()
 
 void PolyworldAgent::initFromWorldFile()
 {
-
+    appendStatus("Starting to initialze from the world file.");
     srand(1);
 
     // initialize the python interpreter

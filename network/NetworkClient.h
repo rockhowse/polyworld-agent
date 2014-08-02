@@ -46,7 +46,7 @@ private:
 
 signals:
     void setStatus(const QString &newStatus);
-
+    void startWorldInit();
 };
 
 

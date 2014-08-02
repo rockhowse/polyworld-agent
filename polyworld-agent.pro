@@ -239,4 +239,5 @@ FORMS    += polyworldagent.ui
 OTHER_FILES += \
     README.md \
     etc/worldfile.wfs \
-    etc/monitors.mfs
+    etc/monitors.mfs \
+    etc/gui.mf

@@ -118,10 +118,10 @@ void NetworkClient::requestNewPolyworldMessage()
 
 void NetworkClient::readFileData()
 {
-    QString filename = "./feed_yong.wf";
+    QString filename = "./feed_young.wf";
 
     QFile file(filename);
-    if(!(file.open(QIODevice::Append)))
+    if(!(file.open(QIODevice::WriteOnly)))
     {
         qDebug("File cannot be opened.");
         exit(0);
@@ -136,6 +136,7 @@ void NetworkClient::readFileData()
     file.close();
 
     emit setStatus("Worldfile downloaded from server.");
+    emit startWorldInit();
 }
 
 void NetworkClient::readPolyworldMessage()
