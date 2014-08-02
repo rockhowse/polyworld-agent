@@ -7,6 +7,8 @@
 #include "gstage.h"
 #include "gpolygon.h"
 
+#include "MonitorView.h"
+
 namespace Ui {
     class PolyworldAgent;
 }
@@ -33,6 +35,9 @@ private:
     TSetList fWorldSet;
 
     class MonitorManager *monitorManager;
+    MonitorViews monitorViews;
+
+    void createMonitorViews();
 
     void InitGround();
 

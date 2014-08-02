@@ -33,6 +33,7 @@ INCLUDEPATH += . \
 #               logs \
                monitor \
                network \
+               ui/gui \
                /usr/include/python2.7/
 
 SOURCES += main.cpp\
@@ -125,7 +126,10 @@ SOURCES += main.cpp\
     monitor/Monitor.cp \
     monitor/MonitorManager.cp \
     monitor/MovieController.cp \
-    monitor/SceneRenderer.cp
+    monitor/SceneRenderer.cp \
+    ui/gui/MonitorView.cp \
+    ui/gui/SceneMonitorView.cp \
+    ui/gui/ToggleWidgetOpenAction.cp
 
 HEADERS  += polyworldagent.h \
     network/NetworkClient.h \
@@ -232,7 +236,10 @@ HEADERS  += polyworldagent.h \
     monitor/Monitor.h \
     monitor/MonitorManager.h \
     monitor/MovieController.h \
-    monitor/SceneRenderer.h
+    monitor/SceneRenderer.h \
+    ui/gui/MonitorView.h \
+    ui/gui/SceneMonitorView.h \
+    ui/gui/ToggleWidgetOpenAction.h
 
 FORMS    += polyworldagent.ui
 

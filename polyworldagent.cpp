@@ -14,6 +14,8 @@
 // Polyworld graphics
 #include "MonitorManager.h"
 #include "Resources.h"
+#include "SceneMonitorView.h"
+#include "Monitor.h"
 
 #define POLYWORLD_SCHEMA_FILE_NAME "/home/mint/polyworld-agent/etc/worldfile.wfs"
 #define POLYWORLD_WORLD_FILE_NAME "/home/mint/build-polyworld-agent-Desktop_Qt_5_3_0_GCC_64bit-Debug/feed_young.wf"
@@ -106,6 +108,9 @@ void PolyworldAgent::initFromWorldFile()
     // --- Init Monitors
     // ---
     monitorManager = new MonitorManager( fStage, string("/home/mint/polyworld-agent/etc/gui.mf"));
+
+    createMonitorViews();
+    show();
 }
 
 void PolyworldAgent::appendStatus(const QString &newStatus) {
@@ -125,5 +130,70 @@ void PolyworldAgent::InitGround()
     fGround.setscale(globals::worldsize);
     fGround.setcolor(fGroundColor);
     fWorldSet.Add(&fGround);
+}
+
+void PolyworldAgent::createMonitorViews()
+{
+    citfor( Monitors, monitorManager->getMonitors(), it )
+    {
+        Monitor *_monitor = *it;
+        MonitorView *view = NULL;
+
+        switch( _monitor->getType() )
+        {
+        /*DECOUPLE
+        case Monitor::CHART:
+            {
+                ChartMonitor *monitor = dynamic_cast<ChartMonitor *>( _monitor );
+                view = new ChartMonitorView( monitor );
+            }
+            break;
+        case Monitor::BRAIN:
+            {
+                BrainMonitor *monitor = dynamic_cast<BrainMonitor *>( _monitor );
+                view = new BrainMonitorView( monitor );
+            }
+            break;
+        case Monitor::POV:
+            {
+                PovMonitor *monitor = dynamic_cast<PovMonitor *>( _monitor );
+                view = new PovMonitorView( monitor );
+            }
+            break;
+        case Monitor::STATUS_TEXT:
+            {
+                StatusTextMonitor *monitor = dynamic_cast<StatusTextMonitor *>( _monitor );
+                view = new StatusTextMonitorView( monitor );
+            }
+            break;
+         */
+        case Monitor::SCENE:
+            {
+                SceneMonitor *monitor = dynamic_cast<SceneMonitor *>( _monitor );
+                view = new SceneMonitorView( monitor );
+            }
+            break;
+        case Monitor::FARM:
+            {
+                // no-op
+            }
+            break;
+        default:
+            assert( false );
+        }
+
+        if( view )
+        {
+            if( (_monitor->getType() == Monitor::SCENE)
+                && (centralWidget() == NULL) )
+            {
+                setCentralWidget( view );
+            }
+
+            view->loadSettings();
+
+            monitorViews.push_back( view );
+        }
+    }
 }
 

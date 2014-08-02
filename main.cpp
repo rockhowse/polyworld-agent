@@ -9,7 +9,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     PolyworldAgent polyWorldAgent;
-    polyWorldAgent.show();
+    // only show this after we have connected
+    //polyWorldAgent.show();
 
     NetworkClient networkClient;
     networkClient.show();
