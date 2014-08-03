@@ -17,6 +17,7 @@
 #include "SceneMonitorView.h"
 #include "Monitor.h"
 #include "ToggleWidgetOpenAction.h"
+#include "barrier.h"
 
 #define POLYWORLD_SCHEMA_FILE_NAME "/home/mint/polyworld-agent/etc/worldfile.wfs"
 #define POLYWORLD_WORLD_FILE_NAME "/home/mint/build-polyworld-agent-Desktop_Qt_5_3_0_GCC_64bit-Debug/feed_young.wf"
@@ -92,6 +93,8 @@ void PolyworldAgent::initFromWorldFile()
         schema->apply( worldfile );
     }
 
+    // 1. Loads data needed to render the ground
+    // 2. loads data needed to render the barriers
     processWorldFile( worldfile );
     agent::processWorldfile( *worldfile );
     GenomeSchema::processWorldfile( *worldfile );
@@ -109,11 +112,13 @@ void PolyworldAgent::initFromWorldFile()
     // Pass ownership of the cast to the stage [TODO] figure out ownership issues
     fStage.SetCast(&fWorldCast);
 
-    // initialize the ground objects
-    // and add them to fWorldSet
+    // initialize the ground objects; add them to fWorldSet
     InitGround();
 
-    // Add all initialized world objects to the stage
+    // initialize the barriers; add them to fWorldSet
+    InitBarriers();
+
+    // Add all initialized world objects to the stage for rendering
     fStage.SetSet(&fWorldSet);
 
     // ---
@@ -152,6 +157,17 @@ void PolyworldAgent::InitGround()
     fGround.setscale(globals::worldsize);
     fGround.setcolor(fGroundColor);
     fWorldSet.Add(&fGround);
+}
+
+//---------------------------------------------------------------------------
+// PolyworldAgent::InitBarriers
+//---------------------------------------------------------------------------
+void PolyworldAgent::InitBarriers()
+{
+    // Add barriers
+    barrier* b = NULL;
+    while( barrier::gXSortedBarriers.next(b) )
+        fWorldSet.Add(b);
 }
 
 void PolyworldAgent::createMonitorViews()
@@ -251,4 +267,29 @@ void PolyworldAgent::processWorldFile(proplib::Document *docWorldFile) {
     fGroundColor = doc.get( "GroundColor" );
     fGroundClearance = doc.get( "GroundClearance" );
     globals::worldsize = doc.get( "WorldSize" );
+
+
+    // ---
+    // --- Barriers
+    // ---
+    {
+        proplib::Property &propBarriers = doc.get( "Barriers" );
+
+        for( int ibarrier = 0; ibarrier < (int)propBarriers.elements().size(); ibarrier++ )
+        {
+            proplib::Property &propBarrier = propBarriers.get( ibarrier );
+            // Note that barriers were already allocated in InitCppProperties()
+            barrier *b = new barrier();
+            barrier::gBarriers.push_back( b );
+
+            b->getPosition().xa = propBarrier.get( "X1" );
+            b->getPosition().za = propBarrier.get( "Z1" );
+            b->getPosition().xb = propBarrier.get( "X2" );
+            b->getPosition().zb = propBarrier.get( "Z2" );
+
+            b->init();
+
+            barrier::gXSortedBarriers.add( b );
+        }
+    }
 }

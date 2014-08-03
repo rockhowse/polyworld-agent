@@ -44,7 +44,9 @@ private:
 
     void createMonitorViews();
 
+    // initialize world file data
     void InitGround();
+    void InitBarriers();
 
     void addViewMenu( QMenuBar *menuBar );
 
