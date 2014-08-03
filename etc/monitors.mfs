@@ -303,9 +303,9 @@ MainScene {
       Width                   640
       Height                  480
     }
-    Movie {
-      Path                    "movie.pmv"
-    }
+    #Movie {
+    #  Path                    "movie.pmv"
+    #}
   }
 }
 

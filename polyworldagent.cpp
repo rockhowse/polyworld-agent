@@ -263,16 +263,18 @@ void PolyworldAgent::processWorldFile(proplib::Document *docWorldFile) {
 
     proplib::Document &doc = *docWorldFile;
 
-    // configure ground settings
+    //- Ground Configuration
     fGroundColor = doc.get( "GroundColor" );
     fGroundClearance = doc.get( "GroundClearance" );
     globals::worldsize = doc.get( "WorldSize" );
 
-
-    // ---
-    // --- Barriers
-    // ---
+    //- Barrier Configuration
     {
+        barrier::gBarrierHeight     = doc.get( "BarrierHeight" );
+        barrier::gBarrierColor      = doc.get( "BarrierColor" );
+        barrier::gStickyBarriers    = doc.get( "StickyBarriers" );
+        barrier::gRatioPositions    = doc.get( "RatioBarrierPositions" );
+
         proplib::Property &propBarriers = doc.get( "Barriers" );
 
         for( int ibarrier = 0; ibarrier < (int)propBarriers.elements().size(); ibarrier++ )

@@ -282,12 +282,15 @@ MonitorManager::MonitorManager(
 			// --- Movie Settings
 			// ---
 			bool recordMovie = propScene.get( "Movie" ).get( "Record" );
-			string moviePath = string("run/") + (string)propScene.get( "Movie" ).get( "Path" );
-			int sampleFrequency = propScene.get( "Movie" ).get( "SampleFrequency" );
-			int sampleDuration = propScene.get( "Movie" ).get( "SampleDuration" );
 
-			MovieSettings movieSettings = MovieSettings( recordMovie, moviePath, sampleFrequency, sampleDuration);
+            // only record movie if it's set
+            if(recordMovie) {
+                string moviePath = string("run/") + (string)propScene.get( "Movie" ).get( "Path" );
+                int sampleFrequency = propScene.get( "Movie" ).get( "SampleFrequency" );
+                int sampleDuration = propScene.get( "Movie" ).get( "SampleDuration" );
 
+                MovieSettings movieSettings = MovieSettings( recordMovie, moviePath, sampleFrequency, sampleDuration);
+            }
 
 			// ---
 			// --- Create Scene Monitor
