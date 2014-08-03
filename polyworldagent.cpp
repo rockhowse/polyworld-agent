@@ -16,6 +16,7 @@
 #include "Resources.h"
 #include "SceneMonitorView.h"
 #include "Monitor.h"
+#include "ToggleWidgetOpenAction.h"
 
 #define POLYWORLD_SCHEMA_FILE_NAME "/home/mint/polyworld-agent/etc/worldfile.wfs"
 #define POLYWORLD_WORLD_FILE_NAME "/home/mint/build-polyworld-agent-Desktop_Qt_5_3_0_GCC_64bit-Debug/feed_young.wf"
@@ -29,10 +30,16 @@ using namespace genome;
 
 PolyworldAgent::PolyworldAgent(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::PolyworldAgent)
+    ui(new Ui::PolyworldAgent),
+    renderTimer(new QTimer(this))
 {
     ui->setupUi(this);
+    // signal GL window to render
+    connect(renderTimer, SIGNAL(timeout()), this, SLOT(exeRender()));
+
 }
+
+
 
 PolyworldAgent::~PolyworldAgent()
 {
@@ -111,6 +118,16 @@ void PolyworldAgent::initFromWorldFile()
 
     createMonitorViews();
     show();
+
+#if __APPLE__
+    QMenuBar *menuBar = ::menuBar = new QMenuBar(0);
+#else
+    QMenuBar *menuBar = this->menuBar();
+#endif
+    addViewMenu( menuBar );
+
+    // start the render timer
+    renderTimer.start(0);
 }
 
 void PolyworldAgent::appendStatus(const QString &newStatus) {
@@ -197,3 +214,26 @@ void PolyworldAgent::createMonitorViews()
     }
 }
 
+//---------------------------------------------------------------------------
+// PolyworldAgent::addViewMenu
+//---------------------------------------------------------------------------
+void PolyworldAgent::addViewMenu( QMenuBar *menuBar )
+{
+    // View menu
+    QMenu *menu = new QMenu( "&View", this );
+    menuBar->addMenu( menu );
+
+    itfor( MonitorViews, monitorViews, it )
+    {
+        MonitorView *view = *it;
+        QAction *action = new ToggleWidgetOpenAction( this,
+                                                      view,
+                                                      view->getMonitor()->getName() );
+        menu->addAction( action );
+    }
+}
+
+void PolyworldAgent::exeRender()
+{
+    monitorManager->step();
+}
