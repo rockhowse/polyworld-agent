@@ -127,7 +127,7 @@ void PolyworldAgent::initFromWorldFile()
     addViewMenu( menuBar );
 
     // start the render timer
-    renderTimer.start(0);
+    renderTimer->start(0);
 }
 
 void PolyworldAgent::appendStatus(const QString &newStatus) {

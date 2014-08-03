@@ -9,6 +9,8 @@
 #include "MonitorView.h"
 
 #include <QTimer>
+// needed for connect()
+#include <QObject>
 
 namespace Ui {
     class PolyworldAgent;
@@ -35,7 +37,7 @@ private:
     Color fGroundColor;
     TSetList fWorldSet;
 
-    QTimer renderTimer;
+    class QTimer *renderTimer;
 
     class MonitorManager *monitorManager;
     MonitorViews monitorViews;
