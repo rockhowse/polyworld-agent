@@ -373,6 +373,9 @@ void MonitorManager::step()
 
 	itfor( Monitors, monitors, it )
 	{
+        //FIX ME - incrementing here
+        curStep++;
+
         // set this step using notification
         (*it)->step( curStep);
                     //DECOUPLE
