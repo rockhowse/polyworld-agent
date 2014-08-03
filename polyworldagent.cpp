@@ -92,6 +92,7 @@ void PolyworldAgent::initFromWorldFile()
         schema->apply( worldfile );
     }
 
+    processWorldFile( worldfile );
     agent::processWorldfile( *worldfile );
     GenomeSchema::processWorldfile( *worldfile );
     Brain::processWorldfile( *worldfile );
@@ -109,7 +110,11 @@ void PolyworldAgent::initFromWorldFile()
     fStage.SetCast(&fWorldCast);
 
     // initialize the ground objects
+    // and add them to fWorldSet
     InitGround();
+
+    // Add all initialized world objects to the stage
+    fStage.SetSet(&fWorldSet);
 
     // ---
     // --- Init Monitors
@@ -236,4 +241,14 @@ void PolyworldAgent::addViewMenu( QMenuBar *menuBar )
 void PolyworldAgent::exeRender()
 {
     monitorManager->step();
+}
+
+void PolyworldAgent::processWorldFile(proplib::Document *docWorldFile) {
+
+    proplib::Document &doc = *docWorldFile;
+
+    // configure ground settings
+    fGroundColor = doc.get( "GroundColor" );
+    fGroundClearance = doc.get( "GroundClearance" );
+    globals::worldsize = doc.get( "WorldSize" );
 }

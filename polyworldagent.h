@@ -48,6 +48,9 @@ private:
 
     void addViewMenu( QMenuBar *menuBar );
 
+    // used to pull pertinante ground information from the worldfile
+    void processWorldFile( proplib::Document *docWorldFile );
+
 public slots:
     void appendStatus(const QString &statusText);
     // called when the network client is finished downloading world file
