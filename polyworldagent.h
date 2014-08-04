@@ -12,6 +12,9 @@
 // needed for connect()
 #include <QObject>
 
+// needed to draw agents
+# include <agent.h>
+
 namespace Ui {
     class PolyworldAgent;
 }
@@ -52,6 +55,11 @@ private:
 
     // used to pull pertinante ground information from the worldfile
     void processWorldFile( proplib::Document *docWorldFile );
+
+    // needed to track agents
+    void addAgent();
+    long fMateWait;
+    agent* polyWorldAgent;
 
 public slots:
     void appendStatus(const QString &statusText);

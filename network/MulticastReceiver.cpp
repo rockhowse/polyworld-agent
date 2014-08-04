@@ -74,13 +74,44 @@ MulticastReceiver::MulticastReceiver(QWidget *parent)
 
 void MulticastReceiver::processPendingDatagrams()
 {
+    struct SimDataPacket {
+        int simStep;
+        float agentX;
+        float agentY;
+        float agentZ;
+        float agentYaw;
+    };
+
     while (udpSocket->hasPendingDatagrams()) {
+
+        SimDataPacket *sdp = new SimDataPacket();
+
+
         QByteArray datagram;
         datagram.resize(udpSocket->pendingDatagramSize());
         udpSocket->readDatagram(datagram.data(), datagram.size());
 
-        emit setStatus(tr("Polyworld-Server: \"%1\"")
-                       .arg(datagram.data()));
+        QDataStream in(&datagram, QIODevice::ReadOnly);
+        in.setVersion(QDataStream::Qt_4_3);
+        in >> sdp->simStep
+           >> sdp->agentX
+           >> sdp->agentY
+           >> sdp->agentZ
+           >> sdp->agentYaw;
+
+
+        emit setStatus(tr("[%1]").arg(sdp->simStep) +
+                       tr("(%1,").arg(sdp->agentX)  +
+                       tr("%1,").arg(sdp->agentY) +
+                       tr("%1,)").arg(sdp->agentZ) +
+                       tr("(%1)").arg(sdp->agentYaw));
+
+        delete(sdp);
+
+        /*
+            tr("Polyworld-Server: \"%1\"")
+           .arg(datagram.data()));
+         */
 
         /*
          statusLabel->setText(tr("Received datagram: \"%1\"")

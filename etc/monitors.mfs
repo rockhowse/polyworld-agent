@@ -299,13 +299,14 @@ MainScene {
     Enabled                   True
     Name                      "Main"
     CameraControllerSettings  "Main"
+    Title                     "Polyworld Agent"
     Buffer {
       Width                   640
       Height                  480
     }
-    #Movie {
-    #  Path                    "movie.pmv"
-    #}
+    Movie {
+      Path                    "movie.pmv"
+    }
   }
 }
 

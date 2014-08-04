@@ -136,6 +136,9 @@ void PolyworldAgent::initFromWorldFile()
 #endif
     addViewMenu( menuBar );
 
+    // let's add a single agent for now
+    addAgent();
+
     // start the render timer
     renderTimer->start(0);
 }
@@ -263,12 +266,14 @@ void PolyworldAgent::processWorldFile(proplib::Document *docWorldFile) {
 
     proplib::Document &doc = *docWorldFile;
 
-    //- Ground Configuration
-    fGroundColor = doc.get( "GroundColor" );
-    fGroundClearance = doc.get( "GroundClearance" );
-    globals::worldsize = doc.get( "WorldSize" );
+    //- Ground Config
+    {
+        fGroundColor = doc.get( "GroundColor" );
+        fGroundClearance = doc.get( "GroundClearance" );
+        globals::worldsize = doc.get( "WorldSize" );
+    }
 
-    //- Barrier Configuration
+    //- Barrier Config
     {
         barrier::gBarrierHeight     = doc.get( "BarrierHeight" );
         barrier::gBarrierColor      = doc.get( "BarrierColor" );
@@ -294,4 +299,38 @@ void PolyworldAgent::processWorldFile(proplib::Document *docWorldFile) {
             barrier::gXSortedBarriers.add( b );
         }
     }
+
+    //- Agent Config
+    {
+        fMateWait = doc.get( "MateWait" );
+    }
+}
+
+// Initially this will only add a single agent to the follwing:
+// 1. fStage
+// 2. gXSortedObjects
+void     PolyworldAgent::addAgent(){
+
+    // initially create a dummy agent
+    polyWorldAgent = agent::getfreeagent(&fStage);
+    polyWorldAgent->grow(fMateWait);
+
+    float x = 0;
+    //(fDomains[id].absoluteSizeX - 0.02) + fDomains[id].startX + 0.01;
+    float z = 0;
+    //(fDomains[id].absoluteSizeZ - 0.02) + fDomains[id].startZ + 0.01;
+    float y = 0.5 * agent::config.agentHeight;
+    float yaw = randpw() * 360.0;
+    polyWorldAgent->settranslation( x, y, z );
+    polyWorldAgent->setyaw( yaw );
+
+    // add agent to stage
+    fStage.AddObject(polyWorldAgent);
+
+    // add agent to list of objects
+    objectxsortedlist::gXSortedObjects.add(polyWorldAgent);
+    //FIX-ME
+    //newAgent->Domain(id);
+    //fDomains[id].numAgents++;
+    //fNewLifes++;
 }
