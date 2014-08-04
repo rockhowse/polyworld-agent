@@ -324,6 +324,8 @@ void     PolyworldAgent::addAgent(){
     polyWorldAgent->settranslation( x, y, z );
     polyWorldAgent->setyaw( yaw );
 
+    polyWorldAgent->geneCache.size = 100.0;
+
     // add agent to stage
     fStage.AddObject(polyWorldAgent);
 
@@ -333,4 +335,10 @@ void     PolyworldAgent::addAgent(){
     //newAgent->Domain(id);
     //fDomains[id].numAgents++;
     //fNewLifes++;
+}
+
+// This moves a polyworld agent
+void PolyworldAgent::moveAgent(float agentX, float agentY, float agentZ, float agentYaw) {
+    polyWorldAgent->settranslation( agentX, agentY, agentZ );
+    polyWorldAgent->setyaw( agentYaw );
 }

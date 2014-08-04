@@ -276,6 +276,17 @@ public:
 		std::string functionPath;
 	} brainAnalysisParms;
 	
+    //FIX ME
+    // THIS SHOULD BE PROTECTED
+    // changing it to hard code size
+    struct GeneCache
+    {
+        float maxSpeed;
+        float strength;
+        float size;
+        long lifespan;
+    } geneCache;
+
 protected:
     void NumberToName();
     void SetGeometry();
@@ -321,13 +332,7 @@ protected:
 	float fComplexity;
 	
 	genome::Genome* fGenome;
-	struct GeneCache
-	{
-		float maxSpeed;
-		float strength;
-		float size;
-		long lifespan;
-	} geneCache;
+
 
 	NervousSystem *fCns;
 	Retina *fRetina;

@@ -68,6 +68,7 @@ private:
 
 signals:
     void setStatus(const QString &newStatus);
+    void moveAgent(float agentX, float agentY, float agentZ, float agentYaw);
 };
 
 #endif

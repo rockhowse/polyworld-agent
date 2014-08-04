@@ -65,6 +65,7 @@ public slots:
     void appendStatus(const QString &statusText);
     // called when the network client is finished downloading world file
     void initFromWorldFile();
+    void moveAgent(float agentX, float agentY, float agentZ, float agentYaw);
 
 private slots:
     void exeRender();

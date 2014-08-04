@@ -106,6 +106,8 @@ void MulticastReceiver::processPendingDatagrams()
                        tr("%1,)").arg(sdp->agentZ) +
                        tr("(%1)").arg(sdp->agentYaw));
 
+        emit moveAgent(sdp->agentX, sdp->agentY, sdp->agentZ, sdp->agentYaw);
+
         delete(sdp);
 
         /*
