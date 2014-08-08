@@ -74,18 +74,7 @@ MulticastReceiver::MulticastReceiver(QWidget *parent)
 
 void MulticastReceiver::processPendingDatagrams()
 {
-    struct SimDataPacket {
-        int simStep;
-        float agentX;
-        float agentY;
-        float agentZ;
-        float agentYaw;
-    };
-
     while (udpSocket->hasPendingDatagrams()) {
-
-        SimDataPacket *sdp = new SimDataPacket();
-
 
         QByteArray datagram;
         datagram.resize(udpSocket->pendingDatagramSize());
@@ -93,22 +82,73 @@ void MulticastReceiver::processPendingDatagrams()
 
         QDataStream in(&datagram, QIODevice::ReadOnly);
         in.setVersion(QDataStream::Qt_4_3);
-        in >> sdp->simStep
-           >> sdp->agentX
-           >> sdp->agentY
-           >> sdp->agentZ
-           >> sdp->agentYaw;
 
+        int messageType = -1;
 
-        emit setStatus(tr("[%1]").arg(sdp->simStep) +
-                       tr("(%1,").arg(sdp->agentX)  +
-                       tr("%1,").arg(sdp->agentY) +
-                       tr("%1,)").arg(sdp->agentZ) +
-                       tr("(%1)").arg(sdp->agentYaw));
+        in >> messageType;
 
-        emit moveAgent(sdp->agentX, sdp->agentY, sdp->agentZ, sdp->agentYaw);
+        switch(messageType) {
+            case MSG_TYPE_STEP:
+            {
+                struct SimDataPacket {
+                    int simStep;
+                    float agentX;
+                    float agentY;
+                    float agentZ;
+                    float agentYaw;
+                };
 
-        delete(sdp);
+                SimDataPacket *sdp = new SimDataPacket();
+
+                in >> sdp->simStep
+                   >> sdp->agentX
+                   >> sdp->agentY
+                   >> sdp->agentZ
+                   >> sdp->agentYaw;
+
+                emit setStatus(tr("MSG_TYPE_STEP:").arg(messageType) +
+                               tr("[%1]").arg(sdp->simStep) +
+                               tr("(%1,").arg(sdp->agentX)  +
+                               tr("%1,").arg(sdp->agentY) +
+                               tr("%1,)").arg(sdp->agentZ) +
+                               tr("(%1)").arg(sdp->agentYaw));
+
+                /*
+                 emit moveAgent(sdp->agentX, sdp->agentY, sdp->agentZ, sdp->agentYaw);
+                */
+                delete(sdp);
+                break;
+            }
+            case MSG_TYPE_AGENT_BIRTH:
+            {
+                struct AgentBirthPacket {
+                    long    agentNum;
+                    float   agentHeight;
+                    float   agentSize;
+                };
+
+                AgentBirthPacket *abp = new AgentBirthPacket();
+                qint64 agentNum;
+
+                in >> agentNum
+                   >> abp->agentHeight
+                   >> abp->agentSize;
+
+                abp->agentNum = (long)agentNum;
+
+                emit setStatus(tr("MSG_TYPE_AGENT_BIRTH:").arg(messageType) +
+                               tr("[%1]").arg(abp->agentNum) +
+                               tr("(%1,").arg(abp->agentHeight) +
+                               tr("%1)").arg(abp->agentSize));
+                delete(abp);
+                break;
+            }
+            case MSG_TYPE_AGENT_DEATH:
+            {
+                emit setStatus(tr("MSG_TYPE_AGENT_DEATH[%1]:").arg(messageType));
+                break;
+            }
+        }
 
         /*
             tr("Polyworld-Server: \"%1\"")

@@ -50,6 +50,11 @@ class QPushButton;
 class QUdpSocket;
 QT_END_NAMESPACE
 
+// types of messages this sender can send.
+#define MSG_TYPE_STEP        0
+#define MSG_TYPE_AGENT_BIRTH 1
+#define MSG_TYPE_AGENT_DEATH 2
+
 class MulticastReceiver : public QDialog
 {
     Q_OBJECT
