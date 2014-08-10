@@ -133,11 +133,12 @@ void MulticastReceiver::processPendingDatagrams()
                                    tr("%1,").arg(sdp->agentY) +
                                    tr("%1,)").arg(sdp->agentZ) +
                                    tr("(%1)").arg(sdp->agentYaw));
-
                     numAgentSent++;
 
                     emit moveAgent(sdp->agentNum, sdp->agentX, sdp->agentY, sdp->agentZ, sdp->agentYaw);
                 }
+
+                emit setStatus("\n");
 
                 delete(sdp);
                 delete(ssh);
