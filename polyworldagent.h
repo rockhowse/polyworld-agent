@@ -72,9 +72,11 @@ public slots:
 private slots:
     void exeRender();
     void on_startPolyWin_clicked();
-    void drawAgentMove(long agentNum, float agentX, float agentY, float agentZ, float agentYaw);
+
     // needed to track agents
+    void removeAgent(long agentNumber);
     void addAgent(long agentNumber, float agentHeight, float agentSize);
+    void drawAgentMove(long agentNum, float agentX, float agentY, float agentZ, float agentYaw);
 };
 
 #endif // POLYWORLDAGENT_H

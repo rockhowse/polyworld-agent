@@ -334,6 +334,39 @@ void     PolyworldAgent::addAgent(long agentNumber, float agentHeight, float age
     //fNewLifes++;
 }
 
+/**
+ * This will remove an agent if it died on the server.
+ *
+ * @brief PolyworldAgent::removeAgent
+ * @param agentNumber
+ */
+void PolyworldAgent::removeAgent(long agentNumber) {
+
+    agent * agentToDie = trackedAgents[agentNumber];
+
+    if(agentToDie){
+        agentToDie->Die();
+
+        // ---
+        // --- Remove From Stage
+        // ---
+        fStage.RemoveObject(agentToDie);
+
+        // ---
+        // --- x-sorted list
+        // ---
+        // following assumes (requires!) list to be currently pointing to c,
+        // and will leave the list pointing to the previous agent
+        // agent::config.xSortedAgents.remove(); // get agent out of the list
+        // objectxsortedlist::gXSortedObjects.removeCurrentObject(); // get agent out of the list
+
+        // Following assumes (requires!) the agent to have stored c->listLink correctly
+        objectxsortedlist::gXSortedObjects.removeObjectWithLink( (gobject*) agentToDie );
+
+        delete agentToDie;
+    }
+}
+
 // This moves a polyworld agent
 void PolyworldAgent::drawAgentMove(long agentNumber, float agentX, float agentY, float agentZ, float agentYaw) {
 

@@ -73,6 +73,7 @@ private:
 
 signals:
     void setStatus(const QString &newStatus);
+    void agentDied(long agentNumber);
     void agentBorn(long agentNumber, float agentHeight, float agentSize);
     void moveAgent(long agentNumber, float agentX, float agentY, float agentZ, float agentYaw);
 };

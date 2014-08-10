@@ -172,19 +172,25 @@ void MulticastReceiver::processPendingDatagrams()
             }
             case MSG_TYPE_AGENT_DEATH:
             {
-                emit setStatus(tr("MSG_TYPE_AGENT_DEATH[%1]:").arg(messageType));
+                struct AgentDeathPacket {
+                    long    agentNum;
+                };
+
+                AgentDeathPacket *abp = new AgentDeathPacket();
+                qint64 agentNum;
+
+                in >> agentNum;
+
+                abp->agentNum = (long)agentNum;
+
+                emit setStatus(tr("MSG_TYPE_AGENT_DEATH:").arg(messageType) +
+                               tr("[%1]").arg(abp->agentNum));
+
+                emit agentDied(abp->agentNum);
+
+                delete(abp);
                 break;
             }
         }
-
-        /*
-            tr("Polyworld-Server: \"%1\"")
-           .arg(datagram.data()));
-         */
-
-        /*
-         statusLabel->setText(tr("Received datagram: \"%1\"")
-                             .arg(datagram.data()));
-         */
     }
 }
