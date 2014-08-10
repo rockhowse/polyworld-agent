@@ -24,9 +24,14 @@ int main(int argc, char *argv[])
     MulticastReceiver multicastReceiver;
     multicastReceiver.show();
 
-    QObject::connect(&multicastReceiver, SIGNAL(setStatus(QString)), &polyWorldAgent, SLOT(appendStatus(QString)));
+    QObject::connect(&multicastReceiver, SIGNAL(setStatus(QString)),
+                     &polyWorldAgent, SLOT(appendStatus(QString)));
+
     QObject::connect(&multicastReceiver, SIGNAL(moveAgent(float,float,float,float)),
                      &polyWorldAgent, SLOT(moveAgent(float,float,float,float)));
+
+    QObject::connect(&multicastReceiver, SIGNAL(agentBorn(long,float,float)),
+                     &polyWorldAgent, SLOT(addAgent(long,float,float)));
 
     return a.exec();
 }

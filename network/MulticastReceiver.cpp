@@ -145,6 +145,9 @@ void MulticastReceiver::processPendingDatagrams()
                                tr("[%1]").arg(abp->agentNum) +
                                tr("(%1,").arg(abp->agentHeight) +
                                tr("%1)").arg(abp->agentSize));
+
+                emit agentBorn(abp->agentNum, abp->agentHeight, abp->agentSize);
+
                 delete(abp);
                 break;
             }

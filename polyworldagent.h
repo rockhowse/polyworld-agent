@@ -56,8 +56,6 @@ private:
     // used to pull pertinante ground information from the worldfile
     void processWorldFile( proplib::Document *docWorldFile );
 
-    // needed to track agents
-    void addAgent(long agentNumber, float agentHeight, float agentSize);
     long fMateWait;
 
     // the client can only track a certain number of agents
@@ -71,9 +69,12 @@ public slots:
     // called when the network client is finished downloading world file
     void initFromWorldFile();
     void moveAgent(long agentNum, float agentX, float agentY, float agentZ, float agentYaw);
+    // needed to track agents
+    void addAgent(long agentNumber, float agentHeight, float agentSize);
 
 private slots:
     void exeRender();
+    void on_startPolyWin_clicked();
 };
 
 #endif // POLYWORLDAGENT_H

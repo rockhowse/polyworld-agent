@@ -342,3 +342,9 @@ void PolyworldAgent::moveAgent(long agentNumber, float agentX, float agentY, flo
         trackedAgents[agentNumber]->setyaw(agentYaw);
     }
 }
+
+void PolyworldAgent::on_startPolyWin_clicked()
+{
+    // load from existing world file
+    initFromWorldFile();
+}
