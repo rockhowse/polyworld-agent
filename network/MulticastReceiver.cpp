@@ -90,8 +90,12 @@ void MulticastReceiver::processPendingDatagrams()
         switch(messageType) {
             case MSG_TYPE_STEP:
             {
-                struct SimDataPacket {
+                struct SimStepHeader {
                     int simStep;
+                    int agentCount;
+                };
+
+                struct SimAgentData {
                     long  agentNum;
                     float agentX;
                     float agentY;
@@ -99,29 +103,42 @@ void MulticastReceiver::processPendingDatagrams()
                     float agentYaw;
                 };
 
-                SimDataPacket *sdp = new SimDataPacket();
+                SimStepHeader *ssh = new SimStepHeader();
+
+                in >> ssh->simStep
+                   >> ssh->agentCount;
+
+                SimAgentData *sdp = new SimAgentData();
                 qint64 agentNum;
 
-                in >> sdp->simStep
-                   >> agentNum
-                   >> sdp->agentX
-                   >> sdp->agentY
-                   >> sdp->agentZ
-                   >> sdp->agentYaw;
+                int numAgentSent = 0;
 
-                sdp->agentNum = (long) agentNum;
+                // whiel we
+                while(numAgentSent < ssh->agentCount) {
 
-                emit setStatus(tr("MSG_TYPE_STEP:").arg(messageType) +
-                               tr("[%1]").arg(sdp->simStep) +
-                               tr("a#[%1]").arg(sdp->agentNum) +
-                               tr("(%1,").arg(sdp->agentX)  +
-                               tr("%1,").arg(sdp->agentY) +
-                               tr("%1,)").arg(sdp->agentZ) +
-                               tr("(%1)").arg(sdp->agentYaw));
+                    in >> agentNum
+                       >> sdp->agentX
+                       >> sdp->agentY
+                       >> sdp->agentZ
+                       >> sdp->agentYaw;
 
-                emit moveAgent(sdp->agentNum, sdp->agentX, sdp->agentY, sdp->agentZ, sdp->agentYaw);
+                    sdp->agentNum = (long) agentNum;
+
+                    emit setStatus(tr("MSG_TYPE_STEP:").arg(messageType) +
+                                   tr("[%1]").arg(ssh->simStep) +
+                                   tr("{%1,").arg(ssh->agentCount) +
+                                   tr("%1}").arg(numAgentSent) +
+                                   tr("a#[%1]").arg(sdp->agentNum) +
+                                   tr("(%1,").arg(sdp->agentX)  +
+                                   tr("%1,").arg(sdp->agentY) +
+                                   tr("%1,)").arg(sdp->agentZ) +
+                                   tr("(%1)").arg(sdp->agentYaw));
+
+                    emit moveAgent(sdp->agentNum, sdp->agentX, sdp->agentY, sdp->agentZ, sdp->agentYaw);
+                }
 
                 delete(sdp);
+                delete(ssh);
                 break;
             }
             case MSG_TYPE_AGENT_BIRTH:
