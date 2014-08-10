@@ -335,7 +335,7 @@ void     PolyworldAgent::addAgent(long agentNumber, float agentHeight, float age
 }
 
 // This moves a polyworld agent
-void PolyworldAgent::moveAgent(long agentNumber, float agentX, float agentY, float agentZ, float agentYaw) {
+void PolyworldAgent::drawAgentMove(long agentNumber, float agentX, float agentY, float agentZ, float agentYaw) {
 
     if( trackedAgents[agentNumber]) {
         trackedAgents[agentNumber]->settranslation(agentX, agentY, agentZ);

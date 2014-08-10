@@ -68,13 +68,13 @@ public slots:
     void appendStatus(const QString &statusText);
     // called when the network client is finished downloading world file
     void initFromWorldFile();
-    void moveAgent(long agentNum, float agentX, float agentY, float agentZ, float agentYaw);
-    // needed to track agents
-    void addAgent(long agentNumber, float agentHeight, float agentSize);
 
 private slots:
     void exeRender();
     void on_startPolyWin_clicked();
+    void drawAgentMove(long agentNum, float agentX, float agentY, float agentZ, float agentYaw);
+    // needed to track agents
+    void addAgent(long agentNumber, float agentHeight, float agentSize);
 };
 
 #endif // POLYWORLDAGENT_H
