@@ -136,9 +136,6 @@ void PolyworldAgent::initFromWorldFile()
 #endif
     addViewMenu( menuBar );
 
-    // let's add a single agent for now
-    addAgent();
-
     // start the render timer
     renderTimer->start(0);
 }
@@ -309,11 +306,11 @@ void PolyworldAgent::processWorldFile(proplib::Document *docWorldFile) {
 // Initially this will only add a single agent to the follwing:
 // 1. fStage
 // 2. gXSortedObjects
-void     PolyworldAgent::addAgent(){
+void     PolyworldAgent::addAgent(long agentNumber, float agentHeight, float agentSize){
 
     // initially create a dummy agent
-    polyWorldAgent = agent::getfreeagent(&fStage);
-    polyWorldAgent->grow(fMateWait);
+    trackedAgents[agentNumber] = agent::getfreeagent(&fStage);
+    trackedAgents[agentNumber]->grow(fMateWait);
 
     float x = 0;
     //(fDomains[id].absoluteSizeX - 0.02) + fDomains[id].startX + 0.01;
@@ -321,16 +318,16 @@ void     PolyworldAgent::addAgent(){
     //(fDomains[id].absoluteSizeZ - 0.02) + fDomains[id].startZ + 0.01;
     float y = 0.5 * agent::config.agentHeight;
     float yaw = randpw() * 360.0;
-    polyWorldAgent->settranslation( x, y, z );
-    polyWorldAgent->setyaw( yaw );
+    trackedAgents[agentNumber]->settranslation( x, y, z );
+    trackedAgents[agentNumber]->setyaw( yaw );
 
-    polyWorldAgent->geneCache.size = 100.0;
+    trackedAgents[agentNumber]->geneCache.size = 100.0;
 
     // add agent to stage
-    fStage.AddObject(polyWorldAgent);
+    fStage.AddObject(trackedAgents[agentNumber]);
 
     // add agent to list of objects
-    objectxsortedlist::gXSortedObjects.add(polyWorldAgent);
+    objectxsortedlist::gXSortedObjects.add(trackedAgents[agentNumber]);
     //FIX-ME
     //newAgent->Domain(id);
     //fDomains[id].numAgents++;
@@ -338,7 +335,10 @@ void     PolyworldAgent::addAgent(){
 }
 
 // This moves a polyworld agent
-void PolyworldAgent::moveAgent(float agentX, float agentY, float agentZ, float agentYaw) {
-    polyWorldAgent->settranslation( agentX, agentY, agentZ );
-    polyWorldAgent->setyaw( agentYaw );
+void PolyworldAgent::moveAgent(long agentNumber, float agentX, float agentY, float agentZ, float agentYaw) {
+
+    if( trackedAgents[agentNumber]) {
+        trackedAgents[agentNumber]->settranslation(agentX, agentY, agentZ);
+        trackedAgents[agentNumber]->setyaw(agentYaw);
+    }
 }

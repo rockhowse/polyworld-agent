@@ -57,15 +57,20 @@ private:
     void processWorldFile( proplib::Document *docWorldFile );
 
     // needed to track agents
-    void addAgent();
+    void addAgent(long agentNumber, float agentHeight, float agentSize);
     long fMateWait;
-    agent* polyWorldAgent;
+
+    // the client can only track a certain number of agents
+    static const unsigned int maxAgents = 1024;
+
+    // using an array instead of the sorted list for quick lookup
+    agent * trackedAgents[maxAgents];
 
 public slots:
     void appendStatus(const QString &statusText);
     // called when the network client is finished downloading world file
     void initFromWorldFile();
-    void moveAgent(float agentX, float agentY, float agentZ, float agentYaw);
+    void moveAgent(long agentNum, float agentX, float agentY, float agentZ, float agentYaw);
 
 private slots:
     void exeRender();
