@@ -28,7 +28,8 @@ void CameraController::step()
 	switch( mode )
 	{
 	case MODE__ROTATE:
-		setRotationAngle( rotationState.angle + rotationState.parms.rate );
+        //disabling this for now
+        //setRotationAngle( rotationState.angle + rotationState.parms.rate );
 		break;
 	case MODE__AGENT_TRACKING:
 		setAgentTrackingTarget();

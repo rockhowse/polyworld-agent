@@ -93,6 +93,7 @@ void MulticastReceiver::processPendingDatagrams()
                 struct SimStepHeader {
                     int simStep;
                     int agentCount;
+                    float sceneRotation;
                 };
 
                 struct SimAgentData {
@@ -106,7 +107,8 @@ void MulticastReceiver::processPendingDatagrams()
                 SimStepHeader *ssh = new SimStepHeader();
 
                 in >> ssh->simStep
-                   >> ssh->agentCount;
+                   >> ssh->agentCount
+                   >> ssh->sceneRotation;
 
                 SimAgentData *sdp = new SimAgentData();
                 qint64 agentNum;
@@ -137,6 +139,9 @@ void MulticastReceiver::processPendingDatagrams()
 
                     emit moveAgent(sdp->agentNum, sdp->agentX, sdp->agentY, sdp->agentZ, sdp->agentYaw);
                 }
+
+                // let the app know what server step, number of agents and rotation is for server
+                emit serverStep(ssh->simStep, ssh->agentCount, ssh->sceneRotation);
 
                 emit setStatus("\n");
 

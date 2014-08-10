@@ -16,6 +16,7 @@
 #include "Resources.h"
 #include "SceneMonitorView.h"
 #include "Monitor.h"
+#include "CameraController.h"
 #include "ToggleWidgetOpenAction.h"
 #include "barrier.h"
 
@@ -373,6 +374,28 @@ void PolyworldAgent::drawAgentMove(long agentNumber, float agentX, float agentY,
     if( trackedAgents[agentNumber]) {
         trackedAgents[agentNumber]->settranslation(agentX, agentY, agentZ);
         trackedAgents[agentNumber]->setyaw(agentYaw);
+    }
+}
+
+// this is called every time a server step comes through
+void PolyworldAgent::serverStep(int serverStep, int numAgents, float sceneRotation) {
+    //get scene rotation
+    float newSceneRotation = 0.0;
+
+    citfor( Monitors, monitorManager->getMonitors(), it )
+    {
+        Monitor *_monitor = *it;
+
+        switch( _monitor->getType() )
+        {
+        case Monitor::SCENE:
+            {
+                SceneMonitor *monitor = dynamic_cast<SceneMonitor *>( _monitor );
+                CameraController *_cameraController = monitor->getCameraController();
+                _cameraController->setRotationAngle(sceneRotation);
+            }
+            break;
+        }
     }
 }
 

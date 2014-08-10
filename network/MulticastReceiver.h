@@ -73,6 +73,7 @@ private:
 
 signals:
     void setStatus(const QString &newStatus);
+    void serverStep(int serverStep, int numAgents, float sceneRotation);
     void agentDied(long agentNumber);
     void agentBorn(long agentNumber, float agentHeight, float agentSize);
     void moveAgent(long agentNumber, float agentX, float agentY, float agentZ, float agentYaw);

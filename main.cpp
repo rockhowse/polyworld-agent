@@ -33,8 +33,8 @@ int main(int argc, char *argv[])
     QObject::connect(&multicastReceiver, SIGNAL(agentBorn(long,float,float)),
                      &polyWorldAgent, SLOT(addAgent(long,float,float)));
 
-    QObject::connect(&multicastReceiver, SIGNAL(agentDied(long)),
-                     &polyWorldAgent, SLOT(removeAgent(long)));
+    QObject::connect(&multicastReceiver, SIGNAL(serverStep(int, int, float)),
+                     &polyWorldAgent, SLOT(serverStep(int, int, float)));
 
     return a.exec();
 }
