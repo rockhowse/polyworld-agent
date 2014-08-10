@@ -92,6 +92,7 @@ void MulticastReceiver::processPendingDatagrams()
             {
                 struct SimDataPacket {
                     int simStep;
+                    long  agentNum;
                     float agentX;
                     float agentY;
                     float agentZ;
@@ -99,23 +100,27 @@ void MulticastReceiver::processPendingDatagrams()
                 };
 
                 SimDataPacket *sdp = new SimDataPacket();
+                qint64 agentNum;
 
                 in >> sdp->simStep
+                   >> agentNum
                    >> sdp->agentX
                    >> sdp->agentY
                    >> sdp->agentZ
                    >> sdp->agentYaw;
 
+                sdp->agentNum = (long) agentNum;
+
                 emit setStatus(tr("MSG_TYPE_STEP:").arg(messageType) +
                                tr("[%1]").arg(sdp->simStep) +
+                               tr("a#[%1]").arg(sdp->agentNum) +
                                tr("(%1,").arg(sdp->agentX)  +
                                tr("%1,").arg(sdp->agentY) +
                                tr("%1,)").arg(sdp->agentZ) +
                                tr("(%1)").arg(sdp->agentYaw));
 
-                /*
-                 emit moveAgent(sdp->agentX, sdp->agentY, sdp->agentZ, sdp->agentYaw);
-                */
+                emit moveAgent(sdp->agentNum, sdp->agentX, sdp->agentY, sdp->agentZ, sdp->agentYaw);
+
                 delete(sdp);
                 break;
             }
