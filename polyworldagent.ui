@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>754</width>
-    <height>389</height>
+    <width>750</width>
+    <height>282</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>PolyworldAgent</string>
+   <string>Polyworld Client</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTextEdit" name="statusEdit">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>140</y>
-      <width>761</width>
+      <y>30</y>
+      <width>741</width>
       <height>191</height>
      </rect>
     </property>
@@ -28,7 +28,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>120</y>
+      <y>10</y>
       <width>111</width>
       <height>16</height>
      </rect>
@@ -41,7 +41,7 @@
     <property name="geometry">
      <rect>
       <x>110</x>
-      <y>110</y>
+      <y>0</y>
       <width>91</width>
       <height>23</height>
      </rect>
@@ -56,7 +56,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>754</width>
+     <width>750</width>
      <height>20</height>
     </rect>
    </property>

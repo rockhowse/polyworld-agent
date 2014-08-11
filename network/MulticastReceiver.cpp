@@ -90,13 +90,13 @@ void MulticastReceiver::processPendingDatagrams()
         switch(messageType) {
             case MSG_TYPE_STEP:
             {
-                struct SimStepHeader {
+                struct SimStepHeaderMsg {
                     int simStep;
                     int agentCount;
                     float sceneRotation;
                 };
 
-                struct SimAgentData {
+                struct SimAgentStepMsg {
                     long  agentNum;
                     float agentX;
                     float agentY;
@@ -104,98 +104,98 @@ void MulticastReceiver::processPendingDatagrams()
                     float agentYaw;
                 };
 
-                SimStepHeader *ssh = new SimStepHeader();
+                SimStepHeaderMsg *sshm = new SimStepHeaderMsg();
 
-                in >> ssh->simStep
-                   >> ssh->agentCount
-                   >> ssh->sceneRotation;
+                in >> sshm->simStep
+                   >> sshm->agentCount
+                   >> sshm->sceneRotation;
 
-                SimAgentData *sdp = new SimAgentData();
+                SimAgentStepMsg *sasm = new SimAgentStepMsg();
                 qint64 agentNum;
 
                 int numAgentSent = 0;
 
                 // whiel we
-                while(numAgentSent < ssh->agentCount) {
+                while(numAgentSent < sshm->agentCount) {
 
                     in >> agentNum
-                       >> sdp->agentX
-                       >> sdp->agentY
-                       >> sdp->agentZ
-                       >> sdp->agentYaw;
+                       >> sasm->agentX
+                       >> sasm->agentY
+                       >> sasm->agentZ
+                       >> sasm->agentYaw;
 
-                    sdp->agentNum = (long) agentNum;
+                    sasm->agentNum = (long) agentNum;
 
                     emit setStatus(tr("MSG_TYPE_STEP:").arg(messageType) +
-                                   tr("[%1]").arg(ssh->simStep) +
-                                   tr("/%1/").arg(ssh->sceneRotation) +
-                                   tr("{%1,").arg(ssh->agentCount) +
+                                   tr("[%1]").arg(sshm->simStep) +
+                                   tr("/%1/").arg(sshm->sceneRotation) +
+                                   tr("{%1,").arg(sshm->agentCount) +
                                    tr("%1}").arg(numAgentSent) +
-                                   tr("a#[%1]").arg(sdp->agentNum) +
-                                   tr("(%1,").arg(sdp->agentX)  +
-                                   tr("%1,").arg(sdp->agentY) +
-                                   tr("%1,)").arg(sdp->agentZ) +
-                                   tr("(%1)").arg(sdp->agentYaw));
+                                   tr("a#[%1]").arg(sasm->agentNum) +
+                                   tr("(%1,").arg(sasm->agentX)  +
+                                   tr("%1,").arg(sasm->agentY) +
+                                   tr("%1,)").arg(sasm->agentZ) +
+                                   tr("(%1)").arg(sasm->agentYaw));
                     numAgentSent++;
 
-                    emit moveAgent(sdp->agentNum, sdp->agentX, sdp->agentY, sdp->agentZ, sdp->agentYaw);
+                    emit moveAgent(sasm->agentNum, sasm->agentX, sasm->agentY, sasm->agentZ, sasm->agentYaw);
                 }
 
                 // let the app know what server step, number of agents and rotation is for server
-                emit serverStep(ssh->simStep, ssh->agentCount, ssh->sceneRotation);
+                emit serverStep(sshm->simStep, sshm->agentCount, sshm->sceneRotation);
 
                 emit setStatus("\n");
 
-                delete(sdp);
-                delete(ssh);
+                delete(sasm);
+                delete(sshm);
                 break;
             }
             case MSG_TYPE_AGENT_BIRTH:
             {
-                struct AgentBirthPacket {
+                struct AgentBirthMsg {
                     long    agentNum;
                     float   agentHeight;
                     float   agentSize;
                 };
 
-                AgentBirthPacket *abp = new AgentBirthPacket();
+                AgentBirthMsg *abm = new AgentBirthMsg();
                 qint64 agentNum;
 
                 in >> agentNum
-                   >> abp->agentHeight
-                   >> abp->agentSize;
+                   >> abm->agentHeight
+                   >> abm->agentSize;
 
-                abp->agentNum = (long)agentNum;
+                abm->agentNum = (long)agentNum;
 
                 emit setStatus(tr("MSG_TYPE_AGENT_BIRTH:").arg(messageType) +
-                               tr("[%1]").arg(abp->agentNum) +
-                               tr("(%1,").arg(abp->agentHeight) +
-                               tr("%1)").arg(abp->agentSize));
+                               tr("[%1]").arg(abm->agentNum) +
+                               tr("(%1,").arg(abm->agentHeight) +
+                               tr("%1)").arg(abm->agentSize));
 
-                emit agentBorn(abp->agentNum, abp->agentHeight, abp->agentSize);
+                emit agentBorn(abm->agentNum, abm->agentHeight, abm->agentSize);
 
-                delete(abp);
+                delete(abm);
                 break;
             }
             case MSG_TYPE_AGENT_DEATH:
             {
-                struct AgentDeathPacket {
+                struct AgentDeathMsg {
                     long    agentNum;
                 };
 
-                AgentDeathPacket *abp = new AgentDeathPacket();
+                AgentDeathMsg *adm = new AgentDeathMsg();
                 qint64 agentNum;
 
                 in >> agentNum;
 
-                abp->agentNum = (long)agentNum;
+                adm->agentNum = (long)agentNum;
 
                 emit setStatus(tr("MSG_TYPE_AGENT_DEATH:").arg(messageType) +
-                               tr("[%1]").arg(abp->agentNum));
+                               tr("[%1]").arg(adm->agentNum));
 
-                emit agentDied(abp->agentNum);
+                emit agentDied(adm->agentNum);
 
-                delete(abp);
+                delete(adm);
                 break;
             }
         }

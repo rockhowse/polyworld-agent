@@ -299,7 +299,7 @@ MainScene {
     Enabled                   True
     Name                      "Main"
     CameraControllerSettings  "Main"
-    Title                     "Polyworld Agent"
+    Title                     "Polyworld Client"
     Buffer {
       Width                   640
       Height                  480
