@@ -128,6 +128,7 @@ void MulticastReceiver::processPendingDatagrams()
 
                     emit setStatus(tr("MSG_TYPE_STEP:").arg(messageType) +
                                    tr("[%1]").arg(ssh->simStep) +
+                                   tr("/%1/").arg(ssh->sceneRotation) +
                                    tr("{%1,").arg(ssh->agentCount) +
                                    tr("%1}").arg(numAgentSent) +
                                    tr("a#[%1]").arg(sdp->agentNum) +
