@@ -399,6 +399,35 @@ void PolyworldAgent::serverStep(int serverStep, int numAgents, float sceneRotati
     }
 }
 
+// Initially this will only add a single food to the follwing:
+// 1. fStage
+// 2. gXSortedObjects
+void     PolyworldAgent::addFood(long foodNumber, float foodHeight, float foodX, float foodY, float foodZ){
+
+    // initially create a dummy agent
+    trackedAgents[agentNumber] = agent::getfreeagent(&fStage);
+    trackedAgents[agentNumber]->grow(fMateWait);
+
+    float x = 0;
+    float z = 0;
+    float y = 0.5 * agent::config.agentHeight;
+    float yaw = randpw() * 360.0;
+
+    trackedAgents[agentNumber]->settranslation( x, y, z );
+    trackedAgents[agentNumber]->setyaw( yaw );
+    trackedAgents[agentNumber]->geneCache.size = 100.0;
+
+    // add agent to stage
+    fStage.AddObject(trackedAgents[agentNumber]);
+
+    // add agent to list of objects
+    objectxsortedlist::gXSortedObjects.add(trackedAgents[agentNumber]);
+    //FIX-ME
+    //newAgent->Domain(id);
+    //fDomains[id].numAgents++;
+    //fNewLifes++;
+}
+
 void PolyworldAgent::on_startPolyWin_clicked()
 {
     // load from existing world file

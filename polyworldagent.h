@@ -64,6 +64,12 @@ private:
     // using an array instead of the sorted list for quick lookup
     agent * trackedAgents[maxAgents];
 
+    // the client can only track a certain number of food objects
+    static const unsigned int maxFood = 1024;
+
+    // using an array instead of the sorted list for quick lookup
+    food * trackedFood[maxFood];
+
 public slots:
     void appendStatus(const QString &statusText);
     // called when the network client is finished downloading world file
@@ -80,6 +86,10 @@ private slots:
     void removeAgent(long agentNumber);
     void addAgent(long agentNumber, float agentHeight, float agentSize);
     void drawAgentMove(long agentNum, float agentX, float agentY, float agentZ, float agentYaw);
+
+    // needed to track food
+    void removeFood(long foodNumber);
+    void addFood(long foodNumber, float foodHeight, float foodX, float foodY, float foodZ);
 };
 
 #endif // POLYWORLDAGENT_H

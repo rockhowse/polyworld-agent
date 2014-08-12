@@ -27,6 +27,9 @@ int main(int argc, char *argv[])
     QObject::connect(&multicastReceiver, SIGNAL(setStatus(QString)),
                      &polyWorldAgent, SLOT(appendStatus(QString)));
 
+    QObject::connect(&multicastReceiver, SIGNAL(serverStep(int, int, float)),
+                     &polyWorldAgent, SLOT(serverStep(int, int, float)));
+
     QObject::connect(&multicastReceiver, SIGNAL(moveAgent(long, float,float,float,float)),
                      &polyWorldAgent, SLOT(drawAgentMove(long, float,float,float,float)));
 
@@ -36,8 +39,11 @@ int main(int argc, char *argv[])
     QObject::connect(&multicastReceiver, SIGNAL(agentDied(long)),
                      &polyWorldAgent, SLOT(removeAgent(long)));
 
-    QObject::connect(&multicastReceiver, SIGNAL(serverStep(int, int, float)),
-                     &polyWorldAgent, SLOT(serverStep(int, int, float)));
+    QObject::connect(&multicastReceiver, SIGNAL(foodAdded(long,float,float,float,float)),
+                     &polyWorldAgent, SLOT(addFood(long,float,float,float,float)));
+
+    QObject::connect(&multicastReceiver, SIGNAL(foodRemoved(long)),
+                     &polyWorldAgent, SLOT(removeFood(long)));
 
     return a.exec();
 }
