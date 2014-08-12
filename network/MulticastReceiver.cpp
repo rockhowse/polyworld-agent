@@ -125,7 +125,7 @@ void MulticastReceiver::processPendingDatagrams()
                        >> sasm->agentYaw;
 
                     sasm->agentNum = (long) agentNum;
-
+/*
                     emit setStatus(tr("MSG_TYPE_STEP:").arg(messageType) +
                                    tr("[%1]").arg(sshm->simStep) +
                                    tr("/%1/").arg(sshm->sceneRotation) +
@@ -136,6 +136,7 @@ void MulticastReceiver::processPendingDatagrams()
                                    tr("%1,").arg(sasm->agentY) +
                                    tr("%1,)").arg(sasm->agentZ) +
                                    tr("(%1)").arg(sasm->agentYaw));
+*/
                     numAgentSent++;
 
                     emit moveAgent(sasm->agentNum, sasm->agentX, sasm->agentY, sasm->agentZ, sasm->agentYaw);
@@ -144,7 +145,7 @@ void MulticastReceiver::processPendingDatagrams()
                 // let the app know what server step, number of agents and rotation is for server
                 emit serverStep(sshm->simStep, sshm->agentCount, sshm->sceneRotation);
 
-                emit setStatus("\n");
+                //emit setStatus("\n");
 
                 delete(sasm);
                 delete(sshm);
@@ -166,12 +167,12 @@ void MulticastReceiver::processPendingDatagrams()
                    >> abm->agentSize;
 
                 abm->agentNum = (long)agentNum;
-
+/*
                 emit setStatus(tr("MSG_TYPE_AGENT_BIRTH:").arg(messageType) +
                                tr("[%1]").arg(abm->agentNum) +
                                tr("(%1,").arg(abm->agentHeight) +
                                tr("%1)").arg(abm->agentSize));
-
+*/
                 emit agentBorn(abm->agentNum, abm->agentHeight, abm->agentSize);
 
                 delete(abm);
@@ -189,10 +190,10 @@ void MulticastReceiver::processPendingDatagrams()
                 in >> agentNum;
 
                 adm->agentNum = (long)agentNum;
-
+/*
                 emit setStatus(tr("MSG_TYPE_AGENT_DEATH:").arg(messageType) +
                                tr("[%1]").arg(adm->agentNum));
-
+*/
                 emit agentDied(adm->agentNum);
 
                 delete(adm);
@@ -221,7 +222,7 @@ void MulticastReceiver::processPendingDatagrams()
 
                 emit setStatus(tr("MSG_TYPE_FOOD_ADD:").arg(messageType) +
                                tr("[%1]").arg(afp->foodNum) +
-                               tr("{%1},").arg(afp->agentHeight) +
+                               tr("{%1},").arg(afp->foodHeight) +
                                tr("(%1,").arg(afp->foodX) +
                                tr("%1,").arg(afp->foodY) +
                                tr("%1)").arg(afp->foodZ));

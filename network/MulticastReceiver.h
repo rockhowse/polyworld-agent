@@ -82,7 +82,7 @@ signals:
     void moveAgent(long agentNumber, float agentX, float agentY, float agentZ, float agentYaw);
 
     void foodRemoved(long foodNumber);
-    void foodAdded(long foodNumber, float foodHeight, float foodX, float foodY, float foodZ,);
+    void foodAdded(long foodNumber, float foodHeight, float foodX, float foodY, float foodZ);
 
 };
 
