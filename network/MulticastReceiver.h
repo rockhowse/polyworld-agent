@@ -54,6 +54,8 @@ QT_END_NAMESPACE
 #define MSG_TYPE_STEP        0
 #define MSG_TYPE_AGENT_BIRTH 1
 #define MSG_TYPE_AGENT_DEATH 2
+#define MSG_TYPE_FOOD_ADD    3
+#define MSG_TYPE_FOOD_REMOVE 4
 
 class MulticastReceiver : public QDialog
 {
@@ -74,9 +76,14 @@ private:
 signals:
     void setStatus(const QString &newStatus);
     void serverStep(int serverStep, int numAgents, float sceneRotation);
+
     void agentDied(long agentNumber);
     void agentBorn(long agentNumber, float agentHeight, float agentSize);
     void moveAgent(long agentNumber, float agentX, float agentY, float agentZ, float agentYaw);
+
+    void foodRemoved(long foodNumber);
+    void foodAdded(long foodNumber, float foodHeight, float foodX, float foodY, float foodZ,);
+
 };
 
 #endif

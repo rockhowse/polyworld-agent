@@ -198,6 +198,60 @@ void MulticastReceiver::processPendingDatagrams()
                 delete(adm);
                 break;
             }
+            case MSG_TYPE_FOOD_ADD:
+            {
+                struct AddFoodPacket {
+                    long    foodNum;
+                    float   foodHeight;
+                    float   foodX;
+                    float   foodY;
+                    float   foodZ;
+                };
+
+                AddFoodPacket *afp = new AddFoodPacket();
+                qint64 foodNum;
+
+                in >> foodNum
+                   >> afp->foodHeight
+                   >> afp->foodX
+                   >> afp->foodY
+                   >> afp->foodZ;
+
+                afp->foodNum = (long)foodNum;
+
+                emit setStatus(tr("MSG_TYPE_FOOD_ADD:").arg(messageType) +
+                               tr("[%1]").arg(afp->foodNum) +
+                               tr("{%1},").arg(afp->agentHeight) +
+                               tr("(%1,").arg(afp->foodX) +
+                               tr("%1,").arg(afp->foodY) +
+                               tr("%1)").arg(afp->foodZ));
+
+                emit foodAdded(afp->foodNum, afp->foodHeight, afp->foodX, afp->foodY, afp->foodZ);
+
+                delete(afp);
+                break;
+            }
+            case MSG_TYPE_FOOD_REMOVE:
+            {
+                struct FoodRemovePacket {
+                    long    foodNum;
+                };
+
+                FoodRemovePacket *frp = new FoodRemovePacket();
+                qint64 foodNum;
+
+                in >> foodNum;
+
+                frp->foodNum = (long)foodNum;
+
+                emit setStatus(tr("MSG_TYPE_FOOD_REMOVE:").arg(messageType) +
+                               tr("[%1]").arg(frp->foodNum));
+
+                emit foodRemoved(frp->foodNum);
+
+                delete(frp);
+                break;
+            }
         }
     }
 }
