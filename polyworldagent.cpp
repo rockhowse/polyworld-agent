@@ -461,14 +461,12 @@ void PolyworldAgent::removeFood(long foodNumber) {
     food * foodToRemove = trackedFood[foodNumber];
 
     if(foodToRemove){
-        foodToRemove->Die();
 
         // ---
         // --- Remove From Stage
         // ---
         fStage.RemoveObject(foodToRemove);
 
-        // Following assumes (requires!) the agent to have stored c->listLink correctly
         objectxsortedlist::gXSortedObjects.removeObjectWithLink( (gobject*) foodToRemove );
 
         delete foodToRemove;
