@@ -30,7 +30,6 @@ public:
 private:
     Ui::PolyworldAgent *ui;
 
-
     // used for rendering
     gstage fStage;
     TCastList fWorldCast;
@@ -67,8 +66,14 @@ private:
     // the client can only track a certain number of food objects
     static const unsigned int maxFood = 1024;
 
+    // Food related properites
+    float fFoodRemoveEnergy;
+
     // using an array instead of the sorted list for quick lookup
     food * trackedFood[maxFood];
+
+    int fStep;
+    int numAgents;
 
 public slots:
     void appendStatus(const QString &statusText);

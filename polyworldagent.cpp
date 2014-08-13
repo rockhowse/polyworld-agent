@@ -41,8 +41,6 @@ PolyworldAgent::PolyworldAgent(QWidget *parent) :
 
 }
 
-
-
 PolyworldAgent::~PolyworldAgent()
 {
     delete ui;
@@ -302,6 +300,35 @@ void PolyworldAgent::processWorldFile(proplib::Document *docWorldFile) {
     {
         fMateWait = doc.get( "MateWait" );
     }
+
+    // Process FoodTypes
+    {
+        fFoodRemoveEnergy = doc.get( "FoodRemoveEnergy" );
+        proplib::Property &propFoodTypes = doc.get( "FoodTypes" );
+        int numFoodTypes = propFoodTypes.size();
+
+        for( int ifoodType = 0; ifoodType < numFoodTypes; ifoodType++ )
+        {
+            proplib::Property &propFoodType = propFoodTypes.get( ifoodType );
+
+            string name = propFoodType.get( "Name" );
+            if( FoodType::lookup(name) != NULL )
+            {
+                propFoodType.err( "Duplicate name." );
+            }
+
+            Color foodColor;
+            if( propFoodType.hasProperty("FoodColor") )
+                foodColor = propFoodType.get( "FoodColor" );
+            else
+                foodColor = doc.get( "FoodColor" );
+            EnergyPolarity energyPolarity = propFoodType.get( "EnergyPolarity" );
+            Energy depletionThreshold = Energy::createDepletionThreshold( fFoodRemoveEnergy, energyPolarity );
+
+            FoodType::define( name, foodColor, energyPolarity, depletionThreshold );
+        }
+
+    }
 }
 
 // Initially this will only add a single agent to the follwing:
@@ -379,8 +406,9 @@ void PolyworldAgent::drawAgentMove(long agentNumber, float agentX, float agentY,
 
 // this is called every time a server step comes through
 void PolyworldAgent::serverStep(int serverStep, int numAgents, float sceneRotation) {
-    //get scene rotation
-    float newSceneRotation = 0.0;
+
+    fStep = serverStep;
+    numAgents = numAgents;
 
     citfor( Monitors, monitorManager->getMonitors(), it )
     {
@@ -404,28 +432,47 @@ void PolyworldAgent::serverStep(int serverStep, int numAgents, float sceneRotati
 // 2. gXSortedObjects
 void     PolyworldAgent::addFood(long foodNumber, float foodHeight, float foodX, float foodY, float foodZ){
 
-    // initially create a dummy agent
-    trackedAgents[agentNumber] = agent::getfreeagent(&fStage);
-    trackedAgents[agentNumber]->grow(fMateWait);
+    // see the .wf for current food types
+    const FoodType *foodType = FoodType::lookup("Standard");
 
-    float x = 0;
-    float z = 0;
-    float y = 0.5 * agent::config.agentHeight;
-    float yaw = randpw() * 360.0;
-
-    trackedAgents[agentNumber]->settranslation( x, y, z );
-    trackedAgents[agentNumber]->setyaw( yaw );
-    trackedAgents[agentNumber]->geneCache.size = 100.0;
+    // initially create a dummey agent
+    trackedFood[foodNumber] = new food( foodType, fStep );
+    trackedFood[foodNumber]->gFoodHeight = foodHeight;
+    trackedFood[foodNumber]->setx(foodX);
+    trackedFood[foodNumber]->sety(foodY);
+    trackedFood[foodNumber]->setz(foodZ);
 
     // add agent to stage
-    fStage.AddObject(trackedAgents[agentNumber]);
+    fStage.AddObject(trackedFood[foodNumber]);
 
     // add agent to list of objects
-    objectxsortedlist::gXSortedObjects.add(trackedAgents[agentNumber]);
-    //FIX-ME
-    //newAgent->Domain(id);
-    //fDomains[id].numAgents++;
-    //fNewLifes++;
+    objectxsortedlist::gXSortedObjects.add(trackedFood[foodNumber]);
+}
+
+/**
+ *
+ * This will remove a food object from the world.
+ *
+ * @brief PolyworldAgent::removeAgent
+ * @param agentNumber
+ */
+void PolyworldAgent::removeFood(long foodNumber) {
+
+    food * foodToRemove = trackedFood[foodNumber];
+
+    if(foodToRemove){
+        foodToRemove->Die();
+
+        // ---
+        // --- Remove From Stage
+        // ---
+        fStage.RemoveObject(foodToRemove);
+
+        // Following assumes (requires!) the agent to have stored c->listLink correctly
+        objectxsortedlist::gXSortedObjects.removeObjectWithLink( (gobject*) foodToRemove );
+
+        delete foodToRemove;
+    }
 }
 
 void PolyworldAgent::on_startPolyWin_clicked()
