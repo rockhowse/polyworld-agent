@@ -303,7 +303,19 @@ void PolyworldAgent::processWorldFile(proplib::Document *docWorldFile) {
 
     // Process FoodTypes
     {
+        food::gFoodHeight = doc.get( "FoodHeight" );
+        food::gFoodColor = doc.get( "FoodColor" );
+        food::gMinFoodEnergy = doc.get( "MinFoodEnergy" );
+        food::gMaxFoodEnergy = doc.get( "MaxFoodEnergy" );
+        food::gSize2Energy = doc.get( "FoodEnergySizeScale" );
+        food::gCarryFood2Energy = doc.get( "EnergyUseCarryFood" );
+
+        fEat2Consume = doc.get( "FoodConsumptionRate" );
+
+        // needed for food
+        globals::numEnergyTypes = doc.get( "NumEnergyTypes" );
         fFoodRemoveEnergy = doc.get( "FoodRemoveEnergy" );
+
         proplib::Property &propFoodTypes = doc.get( "FoodTypes" );
         int numFoodTypes = propFoodTypes.size();
 
@@ -327,7 +339,17 @@ void PolyworldAgent::processWorldFile(proplib::Document *docWorldFile) {
 
             FoodType::define( name, foodColor, energyPolarity, depletionThreshold );
         }
+    }
 
+    // configure solid objects
+    // not sure if client needs this or not...
+    {
+        fSolidObjects = 0;
+#define __SET( PROP, MASK ) if( (bool)doc.get("Solid" PROP) ) fSolidObjects |= MASK##TYPE
+        __SET( "Agents", AGENT );
+        __SET( "Food", FOOD );
+        __SET( "Bricks", BRICK );
+#undef __SET
     }
 }
 
@@ -435,12 +457,15 @@ void     PolyworldAgent::addFood(long foodNumber, float foodHeight, float foodX,
     // see the .wf for current food types
     const FoodType *foodType = FoodType::lookup("Standard");
 
+    food * newFood = new food( foodType, fStep );
+
     // initially create a dummey agent
-    trackedFood[foodNumber] = new food( foodType, fStep );
+    trackedFood[foodNumber] = newFood;
     trackedFood[foodNumber]->gFoodHeight = foodHeight;
     trackedFood[foodNumber]->setx(foodX);
     trackedFood[foodNumber]->sety(foodY);
     trackedFood[foodNumber]->setz(foodZ);
+    //trackedFood[foodNumber]->setradius();
 
     // add agent to stage
     fStage.AddObject(trackedFood[foodNumber]);

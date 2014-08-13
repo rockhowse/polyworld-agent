@@ -72,8 +72,16 @@ private:
     // using an array instead of the sorted list for quick lookup
     food * trackedFood[maxFood];
 
+    float fEat2Consume;
+
     int fStep;
     int numAgents;
+
+    //
+    int fSolidObjects;	// agents cannot pass through solid objects (collisions are avoided)
+    int fCarryObjects;  // specifies which types of objects can be picked up.
+    int fShieldObjects;  // specifies which types of objects act as shields.
+
 
 public slots:
     void appendStatus(const QString &statusText);
