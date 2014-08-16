@@ -96,12 +96,15 @@ void MulticastReceiver::processPendingDatagrams()
                     float sceneRotation;
                 };
 
-                struct SimAgentStepMsg {
+                struct SimAgentData {
                     long  agentNum;
                     float agentX;
                     float agentY;
                     float agentZ;
                     float agentYaw;
+                    float agentRedChannel;
+                    float agentGreenChannel;
+                    float agentBlueChannel;
                 };
 
                 SimStepHeaderMsg *sshm = new SimStepHeaderMsg();
@@ -110,7 +113,7 @@ void MulticastReceiver::processPendingDatagrams()
                    >> sshm->agentCount
                    >> sshm->sceneRotation;
 
-                SimAgentStepMsg *sasm = new SimAgentStepMsg();
+                SimAgentData *sad = new SimAgentData();
                 qint64 agentNum;
 
                 int numAgentSent = 0;
@@ -119,12 +122,15 @@ void MulticastReceiver::processPendingDatagrams()
                 while(numAgentSent < sshm->agentCount) {
 
                     in >> agentNum
-                       >> sasm->agentX
-                       >> sasm->agentY
-                       >> sasm->agentZ
-                       >> sasm->agentYaw;
+                       >> sad->agentX
+                       >> sad->agentY
+                       >> sad->agentZ
+                       >> sad->agentYaw
+                       >> sad->agentRedChannel
+                       >> sad->agentGreenChannel
+                       >> sad->agentBlueChannel;
 
-                    sasm->agentNum = (long) agentNum;
+                    sad->agentNum = (long) agentNum;
 /*
                     emit setStatus(tr("MSG_TYPE_STEP:").arg(messageType) +
                                    tr("[%1]").arg(sshm->simStep) +
@@ -139,7 +145,14 @@ void MulticastReceiver::processPendingDatagrams()
 */
                     numAgentSent++;
 
-                    emit moveAgent(sasm->agentNum, sasm->agentX, sasm->agentY, sasm->agentZ, sasm->agentYaw);
+                    emit moveAgent(sad->agentNum,
+                                   sad->agentX,
+                                   sad->agentY,
+                                   sad->agentZ,
+                                   sad->agentYaw,
+                                   sad->agentRedChannel,
+                                   sad->agentGreenChannel,
+                                   sad->agentBlueChannel);
                 }
 
                 // let the app know what server step, number of agents and rotation is for server
@@ -147,7 +160,7 @@ void MulticastReceiver::processPendingDatagrams()
 
                 //emit setStatus("\n");
 
-                delete(sasm);
+                delete(sad);
                 delete(sshm);
                 break;
             }

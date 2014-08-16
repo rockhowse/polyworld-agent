@@ -418,11 +418,21 @@ void PolyworldAgent::removeAgent(long agentNumber) {
 }
 
 // This moves a polyworld agent
-void PolyworldAgent::drawAgentMove(long agentNumber, float agentX, float agentY, float agentZ, float agentYaw) {
+void PolyworldAgent::drawAgentMove(long agentNumber,
+                                   float agentX,
+                                   float agentY,
+                                   float agentZ,
+                                   float agentYaw,
+                                   float agentRedChannel,
+                                   float agentGreenChannel,
+                                   float agentBluecChannel) {
 
     if( trackedAgents[agentNumber]) {
         trackedAgents[agentNumber]->settranslation(agentX, agentY, agentZ);
         trackedAgents[agentNumber]->setyaw(agentYaw);
+        trackedAgents[agentNumber]->SetRed(agentRedChannel);
+        trackedAgents[agentNumber]->SetGreen(agentRedChannel);
+        trackedAgents[agentNumber]->SetBlue(agentRedChannel);
     }
 }
 

@@ -79,7 +79,14 @@ signals:
 
     void agentDied(long agentNumber);
     void agentBorn(long agentNumber, float agentHeight, float agentSize);
-    void moveAgent(long agentNumber, float agentX, float agentY, float agentZ, float agentYaw);
+    void moveAgent(long agentNumber,
+                   float agentX,
+                   float agentY,
+                   float agentZ,
+                   float agentYaw,
+                   float agentRedChannel,
+                   float agentGreenChannel,
+                   float agentBluecChannel);
 
     void foodRemoved(long foodNumber);
     void foodAdded(long foodNumber, float foodHeight, float foodX, float foodY, float foodZ);

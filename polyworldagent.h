@@ -98,7 +98,14 @@ private slots:
     // needed to track agents
     void removeAgent(long agentNumber);
     void addAgent(long agentNumber, float agentHeight, float agentSize);
-    void drawAgentMove(long agentNum, float agentX, float agentY, float agentZ, float agentYaw);
+    void drawAgentMove(long agentNumber,
+                       float agentX,
+                       float agentY,
+                       float agentZ,
+                       float agentYaw,
+                       float agentRedChannel,
+                       float agentGreenChannel,
+                       float agentBluecChannel);
 
     // needed to track food
     void removeFood(long foodNumber);
