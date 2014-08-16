@@ -356,12 +356,13 @@ void PolyworldAgent::processWorldFile(proplib::Document *docWorldFile) {
 // Initially this will only add a single agent to the follwing:
 // 1. fStage
 // 2. gXSortedObjects
-void     PolyworldAgent::addAgent(long agentNumber, float agentHeight, float agentSize){
+void     PolyworldAgent::addAgent(long agentNumber, float agentHeight, float agentSize, float maxSpeed){
 
     // initially create a dummy agent
     trackedAgents[agentNumber] = agent::getfreeagent(&fStage);
 
     // set agent size before we GROW!
+    trackedAgents[agentNumber]->SetGeneCacheMaxSpeed(maxSpeed);
     trackedAgents[agentNumber]->SetSize(agentSize);
 
     // GROW MY PRETTY... GROW!
@@ -375,8 +376,6 @@ void     PolyworldAgent::addAgent(long agentNumber, float agentHeight, float age
     float yaw = randpw() * 360.0;
     trackedAgents[agentNumber]->settranslation( x, y, z );
     trackedAgents[agentNumber]->setyaw( yaw );
-
-    trackedAgents[agentNumber]->geneCache.size = 100.0;
 
     // add agent to stage
     fStage.AddObject(trackedAgents[agentNumber]);

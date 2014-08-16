@@ -97,7 +97,12 @@ private slots:
 
     // needed to track agents
     void removeAgent(long agentNumber);
-    void addAgent(long agentNumber, float agentHeight, float agentSize);
+
+    void addAgent(long agentNumber,
+                  float agentHeight,
+                  float agentSize,
+                  float maxSpeed);
+
     void drawAgentMove(long agentNumber,
                        float agentX,
                        float agentY,
@@ -109,7 +114,12 @@ private slots:
 
     // needed to track food
     void removeFood(long foodNumber);
-    void addFood(long foodNumber, float foodHeight, float foodX, float foodY, float foodZ);
+
+    void addFood(long foodNumber,
+                 float foodHeight,
+                 float foodX,
+                 float foodY,
+                 float foodZ);
 };
 
 #endif // POLYWORLDAGENT_H

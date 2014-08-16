@@ -78,7 +78,12 @@ signals:
     void serverStep(int serverStep, int numAgents, float sceneRotation);
 
     void agentDied(long agentNumber);
-    void agentBorn(long agentNumber, float agentHeight, float agentSize);
+
+    void agentBorn(long agentNumber,
+                   float agentHeight,
+                   float agentSize,
+                   float agentGeneCacheMaxSpeed);
+
     void moveAgent(long agentNumber,
                    float agentX,
                    float agentY,
@@ -89,7 +94,12 @@ signals:
                    float agentBluecChannel);
 
     void foodRemoved(long foodNumber);
-    void foodAdded(long foodNumber, float foodHeight, float foodX, float foodY, float foodZ);
+
+    void foodAdded(long foodNumber,
+                   float foodHeight,
+                   float foodX,
+                   float foodY,
+                   float foodZ);
 
 };
 

@@ -170,6 +170,7 @@ void MulticastReceiver::processPendingDatagrams()
                     long    agentNum;
                     float   agentHeight;
                     float   agentSize;
+                    float   agentGeneCacheMaxSpeed;
                 };
 
                 AgentBirthMsg *abm = new AgentBirthMsg();
@@ -177,7 +178,8 @@ void MulticastReceiver::processPendingDatagrams()
 
                 in >> agentNum
                    >> abm->agentHeight
-                   >> abm->agentSize;
+                   >> abm->agentSize
+                   >> abm->agentGeneCacheMaxSpeed;
 
                 abm->agentNum = (long)agentNum;
 /*
@@ -186,7 +188,7 @@ void MulticastReceiver::processPendingDatagrams()
                                tr("(%1,").arg(abm->agentHeight) +
                                tr("%1)").arg(abm->agentSize));
 */
-                emit agentBorn(abm->agentNum, abm->agentHeight, abm->agentSize);
+                emit agentBorn(abm->agentNum, abm->agentHeight, abm->agentSize, abm->agentGeneCacheMaxSpeed);
 
                 delete(abm);
                 break;

@@ -229,6 +229,7 @@ public:
 	float Drop();
     float Size();
     void SetSize(float agentSize);
+    void SetGeneCacheMaxSpeed(float maxSpeed);
     long Age();
     long MaxAge();
     long LastMate();
@@ -277,17 +278,6 @@ public:
 		std::string functionPath;
 	} brainAnalysisParms;
 	
-    //FIX ME
-    // THIS SHOULD BE PROTECTED
-    // changing it to hard code size
-    struct GeneCache
-    {
-        float maxSpeed;
-        float strength;
-        float size;
-        long lifespan;
-    } geneCache;
-
 protected:
     void NumberToName();
     void SetGeometry();
@@ -334,6 +324,13 @@ protected:
 	
 	genome::Genome* fGenome;
 
+    struct GeneCache
+    {
+        float maxSpeed;
+        float strength;
+        float size;
+        long lifespan;
+    } geneCache;
 
 	NervousSystem *fCns;
 	Retina *fRetina;
@@ -412,6 +409,7 @@ inline float agent::Pickup() { return outputNerves.pickup->get(); }
 inline float agent::Drop() { return outputNerves.drop->get(); }
 inline float agent::Size() { return geneCache.size; }
 inline void agent::SetSize(float agentSize) { geneCache.size = agentSize; }
+inline void agent::SetGeneCacheMaxSpeed (float maxSpeed) { geneCache.maxSpeed = maxSpeed; }
 inline long agent::Age() { return fAge; }
 inline long agent::MaxAge() { return geneCache.lifespan; }
 inline long agent::LastMate() { return fLastMate; }
