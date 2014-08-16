@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     polyWorldAgent.show();
 
     NetworkClient networkClient;
-    networkClient.show();
+    // networkClient.show();
 
     // update status from networkclient
     QObject::connect(&networkClient, SIGNAL(setStatus(QString)), &polyWorldAgent, SLOT(appendStatus(QString)));
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     QObject::connect(&networkClient, SIGNAL(startWorldInit()), &polyWorldAgent, SLOT(initFromWorldFile()));
 
     MulticastReceiver multicastReceiver;
-    multicastReceiver.show();
+    // multicastReceiver.show();
 
     QObject::connect(&multicastReceiver, SIGNAL(setStatus(QString)),
                      &polyWorldAgent, SLOT(appendStatus(QString)));

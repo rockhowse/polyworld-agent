@@ -176,7 +176,9 @@ public:
     
     virtual void draw();
 	void setGenomeReady();
-    void grow( long mateWait );    
+    void grow( long mateWait,
+               float agentSize=0.0,
+               float agentGeneCacheMaxSpeed=0.0);
     virtual void setradius();    
 	void eat( food* f,
 			  float eatFitnessParameter,

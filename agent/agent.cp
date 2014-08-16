@@ -490,7 +490,9 @@ void agent::setGenomeReady()
 //---------------------------------------------------------------------------
 // agent::grow
 //---------------------------------------------------------------------------
-void agent::grow( long mateWait )
+void agent::grow( long mateWait,
+                  float agentSize,
+                  float agentGeneCacheMaxSpeed)
 {    
 	Q_CHECK_PTR(fGenome);
 	Q_CHECK_PTR(fCns);
@@ -570,6 +572,14 @@ void agent::grow( long mateWait )
     //logs->postEvent( BrainGrownEvent(this) );
 
 	fCns->prebirth();
+
+    // if we have size/maxSpeed, overwite values here
+    // instead of using gene computed ones
+    // set agent size before we create the view of the agent
+    if(agentSize > 0.0 && agentGeneCacheMaxSpeed > 0.0) {
+        SetSize(agentSize);
+        SetGeneCacheMaxSpeed(agentGeneCacheMaxSpeed);
+    }
 
     // setup the agent's geometry
     SetGeometry();
