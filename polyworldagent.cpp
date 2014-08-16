@@ -360,6 +360,11 @@ void     PolyworldAgent::addAgent(long agentNumber, float agentHeight, float age
 
     // initially create a dummy agent
     trackedAgents[agentNumber] = agent::getfreeagent(&fStage);
+
+    // set agent size before we GROW!
+    trackedAgents[agentNumber]->SetSize(agentSize);
+
+    // GROW MY PRETTY... GROW!
     trackedAgents[agentNumber]->grow(fMateWait);
 
     float x = 0;
@@ -425,14 +430,14 @@ void PolyworldAgent::drawAgentMove(long agentNumber,
                                    float agentYaw,
                                    float agentRedChannel,
                                    float agentGreenChannel,
-                                   float agentBluecChannel) {
+                                   float agentBlueChannel) {
 
     if( trackedAgents[agentNumber]) {
         trackedAgents[agentNumber]->settranslation(agentX, agentY, agentZ);
         trackedAgents[agentNumber]->setyaw(agentYaw);
         trackedAgents[agentNumber]->SetRed(agentRedChannel);
-        trackedAgents[agentNumber]->SetGreen(agentRedChannel);
-        trackedAgents[agentNumber]->SetBlue(agentRedChannel);
+        trackedAgents[agentNumber]->SetGreen(agentGreenChannel);
+        trackedAgents[agentNumber]->SetBlue(agentBlueChannel);
     }
 }
 

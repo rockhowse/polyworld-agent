@@ -228,6 +228,7 @@ public:
 	float Pickup();
 	float Drop();
     float Size();
+    void SetSize(float agentSize);
     long Age();
     long MaxAge();
     long LastMate();
@@ -410,6 +411,7 @@ inline float agent::Mate() { return outputNerves.mate->get(); }
 inline float agent::Pickup() { return outputNerves.pickup->get(); }
 inline float agent::Drop() { return outputNerves.drop->get(); }
 inline float agent::Size() { return geneCache.size; }
+inline void agent::SetSize(float agentSize) { geneCache.size = agentSize; }
 inline long agent::Age() { return fAge; }
 inline long agent::MaxAge() { return geneCache.lifespan; }
 inline long agent::LastMate() { return fLastMate; }
