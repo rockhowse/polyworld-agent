@@ -123,6 +123,11 @@ private slots:
                  float foodX,
                  float foodY,
                  float foodZ);
+
+    void changeFood(long foodNumber,
+                    float foodXLen,
+                    float foodYLen,
+                    float foodZLen);
 };
 
 #endif // POLYWORLDAGENT_H

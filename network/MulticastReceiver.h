@@ -101,10 +101,10 @@ signals:
                    float foodY,
                    float foodZ);
 
-    void growFood(long foodNumber,
-                  float foodXLen,
-                  float foodYLen,
-                  float foodZLen);
+    void foodChanged(long foodNumber,
+                     float foodXLen,
+                     float foodYLen,
+                     float foodZLen);
 
 };
 

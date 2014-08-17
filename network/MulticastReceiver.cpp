@@ -186,10 +186,10 @@ void MulticastReceiver::processPendingDatagrams()
 
                     numFoodSent++;
 
-                    emit growFood(sfd->foodNum,
-                                   sfd->foodXLen,
-                                   sfd->foodYLen,
-                                   sfd->foodZLen);
+                    emit foodChanged(sfd->foodNum,
+                                     sfd->foodXLen,
+                                     sfd->foodYLen,
+                                     sfd->foodZLen);
                 }
 
                 delete(sad);

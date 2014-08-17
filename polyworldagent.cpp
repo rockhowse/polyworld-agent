@@ -507,6 +507,26 @@ void PolyworldAgent::removeFood(long foodNumber) {
         delete foodToRemove;
     }
 }
+/**
+ *
+ * During each step, we need to update the food object's size based on server state
+ *
+ * @brief PolyworldAgent::changeFood
+ * @param foodNumber
+ * @param foodXLen
+ * @param foodYLen
+ * @param foodZLen
+ */
+void PolyworldAgent::changeFood(long foodNumber,
+                                float foodXLen,
+                                float foodYLen,
+                                float foodZLen) {
+    food * foodToRemove = trackedFood[foodNumber];
+
+    if(foodToRemove){
+        foodToRemove->setlen(foodXLen, foodYLen, foodZLen);
+    }
+}
 
 void PolyworldAgent::on_startPolyWin_clicked()
 {

@@ -45,5 +45,9 @@ int main(int argc, char *argv[])
     QObject::connect(&multicastReceiver, SIGNAL(foodRemoved(long)),
                      &polyWorldAgent, SLOT(removeFood(long)));
 
+    QObject::connect(&multicastReceiver, SIGNAL(foodChanged(long,float,float,float)),
+                     &polyWorldAgent, SLOT(changeFood(long,float,float,float)));
+
+
     return a.exec();
 }
