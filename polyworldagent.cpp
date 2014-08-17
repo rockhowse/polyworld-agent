@@ -521,10 +521,10 @@ void PolyworldAgent::changeFood(long foodNumber,
                                 float foodXLen,
                                 float foodYLen,
                                 float foodZLen) {
-    food * foodToRemove = trackedFood[foodNumber];
+    food * foodToChange = trackedFood[foodNumber];
 
-    if(foodToRemove){
-        foodToRemove->setlen(foodXLen, foodYLen, foodZLen);
+    if(foodToChange){
+        foodToChange->setlen(foodXLen, foodYLen, foodZLen);
     }
 }
 

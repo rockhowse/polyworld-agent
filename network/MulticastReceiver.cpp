@@ -192,7 +192,7 @@ void MulticastReceiver::processPendingDatagrams()
                                      sfd->foodZLen);
                 }
 
-                delete(sad);
+                delete(sfd);
 
                 // let the app know what server step, number of agents and rotation is for server
                 emit serverStep(sshm->simStep, sshm->agentCount, sshm->foodCount, sshm->sceneRotation);
