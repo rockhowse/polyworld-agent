@@ -75,7 +75,7 @@ private:
 
 signals:
     void setStatus(const QString &newStatus);
-    void serverStep(int serverStep, int numAgents, float sceneRotation);
+    void serverStep(int serverStep, int numAgents, int numFood, float sceneRotation);
 
     void agentDied(long agentNumber);
 
@@ -100,6 +100,11 @@ signals:
                    float foodX,
                    float foodY,
                    float foodZ);
+
+    void growFood(long foodNumber,
+                  float foodXLen,
+                  float foodYLen,
+                  float foodZLen);
 
 };
 

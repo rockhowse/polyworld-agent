@@ -437,7 +437,7 @@ void PolyworldAgent::drawAgentMove(long agentNumber,
 }
 
 // this is called every time a server step comes through
-void PolyworldAgent::serverStep(int serverStep, int numAgents, float sceneRotation) {
+void PolyworldAgent::serverStep(int serverStep, int numAgents, int numFood, float sceneRotation) {
 
     fStep = serverStep;
     numAgents = numAgents;

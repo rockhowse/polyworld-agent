@@ -93,7 +93,10 @@ private slots:
     void on_startPolyWin_clicked();
 
     // set server rotation and update global stats on step and agent numbers
-    void serverStep(int serverStep, int numAgents, float sceneRotation);
+    void serverStep(int serverStep,
+                    int numAgents,
+                    int numFood,
+                    float sceneRotation);
 
     // needed to track agents
     void removeAgent(long agentNumber);

@@ -90,12 +90,22 @@ void MulticastReceiver::processPendingDatagrams()
         switch(messageType) {
             case MSG_TYPE_STEP:
             {
+                /////////////// SIM HEADER //////////////
                 struct SimStepHeaderMsg {
                     int simStep;
                     int agentCount;
+                    int foodCount;
                     float sceneRotation;
                 };
 
+                SimStepHeaderMsg *sshm = new SimStepHeaderMsg();
+
+                in >> sshm->simStep
+                   >> sshm->agentCount
+                   >> sshm->foodCount
+                   >> sshm->sceneRotation;
+
+                //////////////// AGENT ///////////////
                 struct SimAgentData {
                     long  agentNum;
                     float agentX;
@@ -106,12 +116,6 @@ void MulticastReceiver::processPendingDatagrams()
                     float agentGreenChannel;
                     float agentBlueChannel;
                 };
-
-                SimStepHeaderMsg *sshm = new SimStepHeaderMsg();
-
-                in >> sshm->simStep
-                   >> sshm->agentCount
-                   >> sshm->sceneRotation;
 
                 SimAgentData *sad = new SimAgentData();
                 qint64 agentNum;
@@ -155,13 +159,46 @@ void MulticastReceiver::processPendingDatagrams()
                                    sad->agentBlueChannel);
                 }
 
-                // let the app know what server step, number of agents and rotation is for server
-                emit serverStep(sshm->simStep, sshm->agentCount, sshm->sceneRotation);
+                delete(sad);
 
-                //emit setStatus("\n");
+                /////////// FOOD ////////////
+                struct SimFoodData {
+                    long foodNum;
+                    float foodXLen;
+                    float foodYLen;
+                    float foodZLen;
+                };
+
+                SimFoodData *sfd = new SimFoodData();
+                qint64 foodNum;
+
+                int numFoodSent = 0;
+
+                // whiel we
+                while(numFoodSent < sshm->foodCount) {
+
+                    in >> foodNum
+                       >> sfd->foodXLen
+                       >> sfd->foodYLen
+                       >> sfd->foodZLen;
+
+                    sfd->foodNum = (long) foodNum;
+
+                    numFoodSent++;
+
+                    emit growFood(sfd->foodNum,
+                                   sfd->foodXLen,
+                                   sfd->foodYLen,
+                                   sfd->foodZLen);
+                }
 
                 delete(sad);
+
+                // let the app know what server step, number of agents and rotation is for server
+                emit serverStep(sshm->simStep, sshm->agentCount, sshm->foodCount, sshm->sceneRotation);
+
                 delete(sshm);
+
                 break;
             }
             case MSG_TYPE_AGENT_BIRTH:
