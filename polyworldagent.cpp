@@ -414,6 +414,10 @@ void PolyworldAgent::removeAgent(long agentNumber) {
         objectxsortedlist::gXSortedObjects.removeObjectWithLink( (gobject*) agentToDie );
 
         delete agentToDie;
+
+        // set the array value to 0
+        // not exactly sure this is cosure in C++
+        trackedAgents[agentNumber] = 0;
     }
 }
 
@@ -505,6 +509,10 @@ void PolyworldAgent::removeFood(long foodNumber) {
         objectxsortedlist::gXSortedObjects.removeObjectWithLink( (gobject*) foodToRemove );
 
         delete foodToRemove;
+
+        // set the array value to 0
+        // not exactly sure this is cosure in C++
+        trackedFood[foodNumber] = 0;
     }
 }
 /**
