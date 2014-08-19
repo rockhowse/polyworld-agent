@@ -60,6 +60,15 @@
      <height>20</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuNetwork">
+    <property name="title">
+     <string>Network</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="actionTCPWindow"/>
+    <addaction name="actionMulticastWindow"/>
+   </widget>
+   <addaction name="menuNetwork"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -70,6 +79,16 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionTCPWindow">
+   <property name="text">
+    <string>TCPWindow</string>
+   </property>
+  </action>
+  <action name="actionMulticastWindow">
+   <property name="text">
+    <string>MulticastWindow</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

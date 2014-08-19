@@ -63,9 +63,9 @@ void gobject::dump(ostream& out)
         out << fName nl;
     else
         out << "NULL" nl;
-    out << fPosition[0] sp fPosition[1] sp fPosition[2] nl;
-    out << fAngle[0] sp fAngle[1] sp fAngle[2] nl;
-    out << fColor[0] sp fColor[1] sp fColor[2] sp fColor[3] nl;
+    out << fPosition[0] spchar fPosition[1] spchar fPosition[2] nl;
+    out << fAngle[0] spchar fAngle[1] spchar fAngle[2] nl;
+    out << fColor[0] spchar fColor[1] spchar fColor[2] spchar fColor[3] nl;
     out << fScale nl;
     out << fRadius nl;
     out << fRotated nl;

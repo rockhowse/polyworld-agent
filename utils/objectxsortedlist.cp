@@ -371,7 +371,7 @@ void objectxsortedlist::list()
     gdlink<gobject*> *savecurr;
     gobject* pobj;
     savecurr = currItem;
-    cout << "c" eql currItem sp "m" eql markItem sp "l" eql lastItem sp "f" eql lastItem->nextItem << " ";
+    cout << "c" eql currItem spchar "m" eql markItem spchar "l" eql lastItem spchar "f" eql lastItem->nextItem << " ";
     this->reset();
     cout << this->kount << ":";
     while( this->next( pobj ) )
@@ -381,7 +381,7 @@ void objectxsortedlist::list()
 			agent* c;
 			c = (agent*) pobj;
 			//cout sp c->Number() << "/" << pobj << "/" << pobj->GetListLink();
-			cout sp c->Number() << "(x=" << c->x() << ")";
+            cout spchar c->Number() << "(x=" << c->x() << ")";
 		}
     }
     cout nlf;

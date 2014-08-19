@@ -25,7 +25,7 @@
 #define qnlf <<"\"\n"; cout.flush()
 #define comma <<","<<
 #define cms <<", "<<
-#define sp <<" "<<
+#define spchar <<" "<<
 #define sp2 <<"  "<<
 #define ses <<" = "<<
 #define eql <<"="<<

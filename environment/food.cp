@@ -85,7 +85,7 @@ food::~food()
 void food::dump(ostream& out)
 {
     assert(false); //out << fEnergy nl;
-    out << fPosition[0] sp fPosition[1] sp fPosition[2] nl;
+    out << fPosition[0] spchar fPosition[1] spchar fPosition[2] nl;
 }
 
 

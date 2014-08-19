@@ -20,8 +20,8 @@
 #include "ToggleWidgetOpenAction.h"
 #include "barrier.h"
 
-#define POLYWORLD_SCHEMA_FILE_NAME "/home/mint/polyworld-agent/etc/worldfile.wfs"
-#define POLYWORLD_WORLD_FILE_NAME "/home/mint/build-polyworld-agent-Desktop_Qt_5_3_0_GCC_64bit-Debug/feed_young.wf"
+#define POLYWORLD_SCHEMA_FILE_NAME "/home/annihilatrix/polyworld-agent/etc/worldfile.wfs"
+#define POLYWORLD_WORLD_FILE_NAME "/home/annihilatrix/build-polyworld-agent-Desktop_Qt_5_3_GCC_64bit-Debug/feed_young.wf"
 
 
 // Define directory mode mask the same, except you need execute privileges to use as a directory (go fig)
@@ -123,7 +123,7 @@ void PolyworldAgent::initFromWorldFile()
     // ---
     // --- Init Monitors
     // ---
-    monitorManager = new MonitorManager( fStage, string("/home/mint/polyworld-agent/etc/gui.mf"));
+    monitorManager = new MonitorManager( fStage, string("/home/annihilatrix/polyworld-agent/etc/gui.mf"));
 
     createMonitorViews();
     show();
@@ -540,4 +540,14 @@ void PolyworldAgent::on_startPolyWin_clicked()
 {
     // load from existing world file
     initFromWorldFile();
+}
+
+void PolyworldAgent::on_actionTCPWindow_triggered()
+{
+    emit showTCPWindow();
+}
+
+void PolyworldAgent::on_actionMulticastWindow_triggered()
+{
+    emit showMulticastWindow();
 }

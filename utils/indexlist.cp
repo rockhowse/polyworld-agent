@@ -53,7 +53,7 @@ indexlist::~indexlist()
 
 void indexlist::dump(ostream& out)
 {
-    out << lo sp hi sp next sp numbytes nl;
+    out << lo spchar hi spchar next spchar numbytes nl;
     
     if (pind == NULL)
     {

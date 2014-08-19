@@ -12,7 +12,7 @@ using namespace std;
 static const char *RPATH[] = {"./Polyworld.app/Contents/Resources/",
 							  "./objects/",
 							  "./",
-                              "/home/mint/polyworld/objects/",
+                              "/home/annihilatrix/polyworld/objects/",
 							  NULL};
 
 //===========================================================================

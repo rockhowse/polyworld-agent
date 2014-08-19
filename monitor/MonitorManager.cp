@@ -33,7 +33,7 @@ MonitorManager::MonitorManager(
 {
 
 	proplib::DocumentBuilder builder;
-    proplib::SchemaDocument *pschema = builder.buildSchemaDocument("/home/mint/polyworld-agent/etc/monitors.mfs");
+    proplib::SchemaDocument *pschema = builder.buildSchemaDocument("/home/annihilatrix/polyworld-agent/etc/monitors.mfs");
 	proplib::Document *pdoc = builder.buildDocument( monitorPath );
 	pschema->apply( pdoc );
 	proplib::Document &doc = *pdoc;

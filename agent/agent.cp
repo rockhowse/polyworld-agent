@@ -403,9 +403,9 @@ void agent::dump(ostream& out)
     out << fYaw2Energy nl;
     out << fSizeAdvantage nl;
     out << fMass nl;
-    out << fLastPosition[0] sp fLastPosition[1] sp fLastPosition[2] nl;
-    out << fVelocity[0] sp fVelocity[1] sp fVelocity[2] nl;
-    out << fNoseColor[0] sp fNoseColor[1] sp fNoseColor[2] nl;
+    out << fLastPosition[0] spchar fLastPosition[1] spchar fLastPosition[2] nl;
+    out << fVelocity[0] spchar fVelocity[1] spchar fVelocity[2] nl;
+    out << fNoseColor[0] spchar fNoseColor[1] spchar fNoseColor[2] nl;
     out << fHeuristicFitness nl;
 
     gobject::dump(out);

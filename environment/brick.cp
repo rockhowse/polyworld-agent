@@ -67,7 +67,7 @@ brick::~brick()
 //-------------------------------------------------------------------------------------------
 void brick::dump( ostream& out )
 {
-    out << fPosition[0] sp fPosition[1] sp fPosition[2] nl;
+    out << fPosition[0] spchar fPosition[1] spchar fPosition[2] nl;
 }
 
 

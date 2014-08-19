@@ -128,6 +128,11 @@ private slots:
                     float foodXLen,
                     float foodYLen,
                     float foodZLen);
+    void on_actionTCPWindow_triggered();
+    void on_actionMulticastWindow_triggered();
+signals:
+    void showTCPWindow();
+    void showMulticastWindow();
 };
 
 #endif // POLYWORLDAGENT_H
