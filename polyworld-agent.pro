@@ -247,4 +247,6 @@ OTHER_FILES += \
     README.md \
     etc/worldfile.wfs \
     etc/monitors.mfs \
-    etc/gui.mf
+    etc/gui.mf \
+    objects/agent.obj \
+    objects/ground.obj

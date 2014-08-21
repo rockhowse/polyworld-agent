@@ -46,14 +46,14 @@ private:
 
     void createMonitorViews();
 
+    // used to pull pertinante ground information from the worldfile
+    void processWorldFile( proplib::Document *docWorldFile );
+
     // initialize world file data
     void InitGround();
     void InitBarriers();
 
     void addViewMenu( QMenuBar *menuBar );
-
-    // used to pull pertinante ground information from the worldfile
-    void processWorldFile( proplib::Document *docWorldFile );
 
     long fMateWait;
 

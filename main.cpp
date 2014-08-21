@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     polyWorldAgent.show();
 
     NetworkClient networkClient;
-    // networkClient.show();
+    networkClient.show();
 
     // update status from networkclient
     QObject::connect(&networkClient, SIGNAL(setStatus(QString)), &polyWorldAgent, SLOT(appendStatus(QString)));
