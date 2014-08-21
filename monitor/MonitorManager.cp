@@ -13,6 +13,8 @@
 //DECOUPLE
 //#include "Simulation.h"
 
+#include "PovMonitor.h"
+
 using namespace std;
 
 //===========================================================================
@@ -25,7 +27,7 @@ MonitorManager::MonitorManager(
                                 // pass in a stage instead of a simulation
                                 gstage &_mStage,
         // END DECOUPLED
-								string monitorPath )
+                                string monitorPath )
     //DECOUPLED
     //: simulation( _simulation )
     :mStage(_mStage)
@@ -101,15 +103,6 @@ MonitorManager::MonitorManager(
 		addMonitor( new BrainMonitor(simulation, frequency, tracker) );
 	}
 
-
-	// ---
-	// --- POV
-	// ---
-	if( (bool)doc.get("POV").get("Enabled") )
-	{
-		addMonitor( new PovMonitor(simulation) );
-	}
-
 	// ---
 	// --- Status Text
 	// ---
@@ -139,6 +132,16 @@ MonitorManager::MonitorManager(
 									properties) );
 	}
     */
+
+    // ---
+    // --- POV
+    // ---
+    if( (bool)doc.get("POV").get("Enabled") )
+    {
+        // DECOUPLE
+        // addMonitor( new PovMonitor(simulation) );
+         addMonitor( new PovMonitor() );
+    }
 
 	// ---
 	// --- Scenes

@@ -13,7 +13,7 @@ typedef std::list<class AgentTracker *> AgentTrackers;
 class MonitorManager
 {
  public:
-    MonitorManager( class gstage &_mStage, std::string monitorPath );
+    MonitorManager( class gstage &_mStage, std::string monitorPath);
 	virtual ~MonitorManager();
 
 	const Monitors &getMonitors();
