@@ -130,7 +130,8 @@ SOURCES += main.cpp\
     ui/gui/MonitorView.cp \
     ui/gui/SceneMonitorView.cp \
     ui/gui/ToggleWidgetOpenAction.cp \
-    monitor/PovMonitor.cpp
+    monitor/PovMonitor.cpp \
+    ui/gui/PovMonitorView.cp
 
 HEADERS  += polyworldagent.h \
     network/NetworkClient.h \
@@ -241,7 +242,8 @@ HEADERS  += polyworldagent.h \
     ui/gui/MonitorView.h \
     ui/gui/SceneMonitorView.h \
     ui/gui/ToggleWidgetOpenAction.h \
-    monitor/PovMonitor.h
+    monitor/PovMonitor.h \
+    ui/gui/PovMonitorView.h
 
 FORMS    += polyworldagent.ui
 

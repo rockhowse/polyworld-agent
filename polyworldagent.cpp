@@ -20,6 +20,11 @@
 #include "ToggleWidgetOpenAction.h"
 #include "barrier.h"
 
+// Agent's POV view
+#include "AgentPovRenderer.h"
+#include "PovMonitor.h"
+#include "PovMonitorView.h"
+
 #define POLYWORLD_SCHEMA_FILE_NAME "/home/annihilatrix/polyworld-agent/etc/worldfile.wfs"
 #define POLYWORLD_WORLD_FILE_NAME "/home/annihilatrix/build-polyworld-agent-Desktop_Qt_5_3_GCC_64bit-Debug/feed_young.wf"
 
@@ -191,12 +196,6 @@ void PolyworldAgent::createMonitorViews()
                 view = new BrainMonitorView( monitor );
             }
             break;
-        case Monitor::POV:
-            {
-                PovMonitor *monitor = dynamic_cast<PovMonitor *>( _monitor );
-                view = new PovMonitorView( monitor );
-            }
-            break;
         case Monitor::STATUS_TEXT:
             {
                 StatusTextMonitor *monitor = dynamic_cast<StatusTextMonitor *>( _monitor );
@@ -204,6 +203,20 @@ void PolyworldAgent::createMonitorViews()
             }
             break;
          */
+        case Monitor::POV:
+            {
+                PovMonitor *monitor = dynamic_cast<PovMonitor *>( _monitor );
+                AgentPovRenderer *renderer = monitor->getRenderer();
+                view = new PovMonitorView( monitor );
+
+                // add in notifications
+                QObject::connect(this, SIGNAL(agentBorn(agent *)),
+                                 renderer, SLOT(add(agent *)));
+
+                QObject::connect(this, SIGNAL(agentDied(agent *)),
+                                 renderer, SLOT(remove(agent *)));
+            }
+            break;
         case Monitor::SCENE:
             {
                 SceneMonitor *monitor = dynamic_cast<SceneMonitor *>( _monitor );
@@ -378,6 +391,11 @@ void     PolyworldAgent::addAgent(long agentNumber, float agentHeight, float age
 
     // add agent to list of objects
     objectxsortedlist::gXSortedObjects.add(trackedAgents[agentNumber]);
+
+    // notify components that agent has been born
+    // 1. AgentPovRenderer
+    emit agentBorn(trackedAgents[agentNumber]);
+
     //FIX-ME
     //newAgent->Domain(id);
     //fDomains[id].numAgents++;
@@ -393,6 +411,10 @@ void     PolyworldAgent::addAgent(long agentNumber, float agentHeight, float age
 void PolyworldAgent::removeAgent(long agentNumber) {
 
     agent * agentToDie = trackedAgents[agentNumber];
+
+    // notify components the agent is dead
+    // 1. AgentPOVRenderer
+    emit agentDied(agentToDie);
 
     if(agentToDie){
         agentToDie->Die();

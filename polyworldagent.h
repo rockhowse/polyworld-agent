@@ -133,6 +133,11 @@ private slots:
 signals:
     void showTCPWindow();
     void showMulticastWindow();
+
+    // used to notify other components of agent birth/death
+    // 1. AgentPOVRenderer
+    void agentBorn(agent * bornAgent);
+    void agentDied(agent * bornAgent);
 };
 
 #endif // POLYWORLDAGENT_H

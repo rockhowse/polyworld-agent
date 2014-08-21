@@ -16,9 +16,6 @@ class AgentPovRenderer : public QObject
 					  int retinaHeight );
 	virtual ~AgentPovRenderer();
 
-	void add( class agent *a );
-	void remove( class agent *a );
-
 	void beginStep();
 	void render( class agent *a );
 	void endStep();
@@ -46,4 +43,8 @@ class AgentPovRenderer : public QObject
 	AgentAttachedData::SlotHandle slotHandle;
 	Viewport *fViewports;
 	std::map<int, Viewport *> fFreeViewports;
+
+private slots:
+    void add( class agent *a );
+    void remove( class agent *a );
 };
