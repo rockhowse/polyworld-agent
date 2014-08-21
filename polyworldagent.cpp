@@ -217,6 +217,9 @@ void PolyworldAgent::createMonitorViews()
 
                 QObject::connect(this, SIGNAL(agentDied(agent *)),
                                  renderer, SLOT(remove(agent *)));
+
+                QObject::connect(this, SIGNAL(agentRender(agent *)),
+                                 renderer, SLOT(render(agent *)));
             }
             break;
         case Monitor::SCENE:
@@ -471,11 +474,42 @@ void PolyworldAgent::drawAgentMove(long agentNumber,
     }
 }
 
+/**
+ * This will currently update the view of all agents
+ */
+void PolyworldAgent::UpdateAgents() {
+    agent* a;
+    objectxsortedlist::gXSortedObjects.reset();
+    while (objectxsortedlist::gXSortedObjects.nextObj(AGENTTYPE, (gobject**)&a))
+    {
+        // calculate view
+        a->UpdateVision();
+
+        // have the AgentPOVRenderer render it
+        emit agentRender(a);
+
+        //FIX ME
+        //DECOUPLE
+        /*
+        a->UpdateBrain();
+        if( !a->BeingCarried() )
+            fFoodEnergyOut += a->UpdateBody(fMoveFitnessParameter,
+                                            agent::config.speed2DPosition,
+                                            fSolidObjects,
+                                            NULL);
+        */
+    }
+
+}
+
 // this is called every time a server step comes through
 void PolyworldAgent::serverStep(int serverStep, int numAgents, int numFood, float sceneRotation) {
 
     fStep = serverStep;
     numAgents = numAgents;
+
+    // update the agent POV views
+    UpdateAgents();
 
     citfor( Monitors, monitorManager->getMonitors(), it )
     {

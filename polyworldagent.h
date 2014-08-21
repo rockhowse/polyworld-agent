@@ -82,6 +82,8 @@ private:
     int fCarryObjects;  // specifies which types of objects can be picked up.
     int fShieldObjects;  // specifies which types of objects act as shields.
 
+    // used to update agent's POV data
+    void UpdateAgents();
 
 public slots:
     void appendStatus(const QString &statusText);
@@ -136,8 +138,9 @@ signals:
 
     // used to notify other components of agent birth/death
     // 1. AgentPOVRenderer
-    void agentBorn(agent * bornAgent);
-    void agentDied(agent * bornAgent);
+    void agentBorn(agent * liveAgent);
+    void agentDied(agent * deadAgent);
+    void agentRender(agent * renderedAgent);
 };
 
 #endif // POLYWORLDAGENT_H

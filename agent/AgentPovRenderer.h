@@ -17,7 +17,6 @@ class AgentPovRenderer : public QObject
 	virtual ~AgentPovRenderer();
 
 	void beginStep();
-	void render( class agent *a );
 	void endStep();
 	void copyTo( class QGLWidget *dst );
 
@@ -47,4 +46,5 @@ class AgentPovRenderer : public QObject
 private slots:
     void add( class agent *a );
     void remove( class agent *a );
+    void render( class agent *a );
 };

@@ -1001,7 +1001,8 @@ void agent::UpdateVision()
 			const float yaw = outputNerves.visionYaw->get() * (agent::config.maxVisionYaw - agent::config.minVisionYaw) + agent::config.minVisionYaw;
 			fCamera.setyaw( yaw );
 		}
-		
+
+        // FIXED - this was moved to PolyworldAgent as signal
         //FIX-ME
         //DECOUPLE
         //fSimulation->GetAgentPovRenderer()->render( this );
