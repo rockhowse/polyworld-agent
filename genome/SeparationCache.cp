@@ -20,6 +20,21 @@ void SeparationCache::init()
 	_slotHandle = AgentAttachedData::createSlot();
 }
 
+// birth()
+// --------------------------------------------------------------------------------
+void SeparationCache::birth(agent *birthAgent )
+{
+    AgentAttachedData::set(birthAgent, _slotHandle, new AgentEntries() );
+}
+
+// --------------------------------------------------------------------------------
+// death()
+// --------------------------------------------------------------------------------
+void SeparationCache::death(agent *deathAgent )
+{
+    delete (AgentEntries *)AgentAttachedData::get(deathAgent, _slotHandle );
+}
+
 // --------------------------------------------------------------------------------
 // birth()
 // --------------------------------------------------------------------------------

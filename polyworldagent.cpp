@@ -109,6 +109,8 @@ void PolyworldAgent::initFromWorldFile()
     // ---
     Brain::init();
     agent::agentinit();
+
+    // needed by the AgentPOVRenderer
     SeparationCache::init();
 
     GenomeUtil::createSchema();
@@ -392,6 +394,9 @@ void     PolyworldAgent::addAgent(long agentNumber, float agentHeight, float age
     // add agent to list of objects
     objectxsortedlist::gXSortedObjects.add(trackedAgents[agentNumber]);
 
+    // update the separationCache
+    SeparationCache::birth(trackedAgents[agentNumber]);
+
     // notify components that agent has been born
     // 1. AgentPovRenderer
     emit agentBorn(trackedAgents[agentNumber]);
@@ -412,11 +417,15 @@ void PolyworldAgent::removeAgent(long agentNumber) {
 
     agent * agentToDie = trackedAgents[agentNumber];
 
-    // notify components the agent is dead
-    // 1. AgentPOVRenderer
-    emit agentDied(agentToDie);
-
     if(agentToDie){
+
+        // notify components the agent is dead
+        // 1. AgentPOVRenderer
+        emit agentDied(agentToDie);
+
+        // remove agent from SeparationCache
+        SeparationCache::death(agentToDie);
+
         agentToDie->Die();
 
         // ---

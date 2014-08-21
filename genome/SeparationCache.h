@@ -13,6 +13,9 @@ class SeparationCache
  public:
 	static void init();
 
+    static void birth(agent *birthAgent );
+    static void death(agent *deathAgent );
+
 	static void birth( const sim::AgentBirthEvent &birth );
 	static void death( const sim::AgentDeathEvent &death );
 
