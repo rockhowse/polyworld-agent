@@ -34,26 +34,7 @@ AgentPovRenderer *PovMonitor::getRenderer()
 
 void PovMonitor::step( long timestep )
 {
-    // Update all agents, using their neurally controlled behaviors
-    {
-        agentPovRenderer->beginStep();
-
-        // DECOUPLE START
-        // don't need this for now since we have a single agent
-        // and it doesn't have to "think"
-        /*
-        if( fStaticTimestepGeometry )
-        {
-            UpdateAgents_StaticTimestepGeometry();
-        }
-        else // if( fStaticTimestepGeometry )
-        {
-            UpdateAgents();
-        }
-        */
-        //DECOUPLE END
-
-        // Swap buffers for the agent POV window when they're all done
-        agentPovRenderer->endStep();
-    }
+    // I originally tried to render here
+    // This has now been moved to the PolyworldAgent::UpdateAgents() function
+    // this was done so we could iterate agents AND swap OpenGLContextes for rendering
 }

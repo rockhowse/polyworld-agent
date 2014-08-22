@@ -13,7 +13,8 @@
 #include <QObject>
 
 // needed to draw agents
-# include <agent.h>
+#include <agent.h>
+#include "AgentPovRenderer.h"
 
 namespace Ui {
     class PolyworldAgent;
@@ -84,6 +85,9 @@ private:
 
     // used to update agent's POV data
     void UpdateAgents();
+
+    // have to keep a pointer to the renderer
+    AgentPovRenderer *agentPOVRenderer;
 
 public slots:
     void appendStatus(const QString &statusText);

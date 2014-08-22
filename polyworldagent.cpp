@@ -208,18 +208,22 @@ void PolyworldAgent::createMonitorViews()
         case Monitor::POV:
             {
                 PovMonitor *monitor = dynamic_cast<PovMonitor *>( _monitor );
-                AgentPovRenderer *renderer = monitor->getRenderer();
+
+                // set the agentPOVRenderer here need it to render during update agents
+                agentPOVRenderer = monitor->getRenderer();
                 view = new PovMonitorView( monitor );
 
-                // add in notifications
-                QObject::connect(this, SIGNAL(agentBorn(agent *)),
-                                 renderer, SLOT(add(agent *)));
+                if(agentPOVRenderer) {
+                    // add in notifications
+                    QObject::connect(this, SIGNAL(agentBorn(agent *)),
+                                     agentPOVRenderer, SLOT(add(agent *)));
 
-                QObject::connect(this, SIGNAL(agentDied(agent *)),
-                                 renderer, SLOT(remove(agent *)));
+                    QObject::connect(this, SIGNAL(agentDied(agent *)),
+                                     agentPOVRenderer, SLOT(remove(agent *)));
 
-                QObject::connect(this, SIGNAL(agentRender(agent *)),
-                                 renderer, SLOT(render(agent *)));
+                    QObject::connect(this, SIGNAL(agentRender(agent *)),
+                                     agentPOVRenderer, SLOT(render(agent *)));
+                }
             }
             break;
         case Monitor::SCENE:
@@ -478,28 +482,38 @@ void PolyworldAgent::drawAgentMove(long agentNumber,
  * This will currently update the view of all agents
  */
 void PolyworldAgent::UpdateAgents() {
-    agent* a;
-    objectxsortedlist::gXSortedObjects.reset();
-    while (objectxsortedlist::gXSortedObjects.nextObj(AGENTTYPE, (gobject**)&a))
-    {
-        // calculate view
-        a->UpdateVision();
 
-        // have the AgentPOVRenderer render it
-        emit agentRender(a);
+    // if we have instantiated the agentPovRenderer
+    if(this->agentPOVRenderer) {
 
-        //FIX ME
-        //DECOUPLE
-        /*
-        a->UpdateBrain();
-        if( !a->BeingCarried() )
-            fFoodEnergyOut += a->UpdateBody(fMoveFitnessParameter,
-                                            agent::config.speed2DPosition,
-                                            fSolidObjects,
-                                            NULL);
-        */
+        // grab the GLContext()
+        agentPOVRenderer->beginStep();
+
+        agent* a;
+        objectxsortedlist::gXSortedObjects.reset();
+        while (objectxsortedlist::gXSortedObjects.nextObj(AGENTTYPE, (gobject**)&a))
+        {
+            // calculate view
+            a->UpdateVision();
+
+            // have the AgentPOVRenderer render it
+            emit agentRender(a);
+
+            //FIX ME
+            //DECOUPLE
+            /*
+            a->UpdateBrain();
+            if( !a->BeingCarried() )
+                fFoodEnergyOut += a->UpdateBody(fMoveFitnessParameter,
+                                                agent::config.speed2DPosition,
+                                                fSolidObjects,
+                                                NULL);
+            */
+        }
+
+        // release GLContext
+        agentPOVRenderer->endStep();
     }
-
 }
 
 // this is called every time a server step comes through
