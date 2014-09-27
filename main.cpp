@@ -4,6 +4,7 @@
 
 #include "NetworkClient.h"
 #include "MulticastReceiver.h"
+#include "Client.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,7 +13,10 @@ int main(int argc, char *argv[])
     // only show this after we have connected
     polyWorldAgent.show();
 
-    NetworkClient networkClient;
+    Client client;
+    client.start("127.0.0.1", 8888);
+
+    /*NetworkClient networkClient;
     networkClient.show();
 
     // update status from networkclient
@@ -47,7 +51,7 @@ int main(int argc, char *argv[])
 
     QObject::connect(&multicastReceiver, SIGNAL(foodChanged(long,float,float,float)),
                      &polyWorldAgent, SLOT(changeFood(long,float,float,float)));
-
+    */
 
     return a.exec();
 }

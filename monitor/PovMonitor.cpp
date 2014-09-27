@@ -16,7 +16,7 @@ PovMonitor::PovMonitor()
 {
     // because the client is only going to render the POV of itself
     // we are only going to have one agent to render
-    agentPovRenderer = new AgentPovRenderer(50,
+    agentPovRenderer = new AgentPovRenderer(20,
                                              Brain::config.retinaWidth,
                                              Brain::config.retinaHeight);
 }
