@@ -65,8 +65,8 @@ NetworkClient::NetworkClient(QWidget *parent)
     connect(getPolyworldMessageButton, SIGNAL(clicked()),
             this, SLOT(requestNewPolyworldMessage()));
     connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
-    //connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readPolyworldMessage()));
-    connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readFileData()));
+    connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readPolyworldMessage()));
+    //connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readFileData()));
 
     connect(tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(displayError(QAbstractSocket::SocketError)));
@@ -157,14 +157,16 @@ void NetworkClient::readPolyworldMessage()
     QString nextPolyworldMessage;
     in >> nextPolyworldMessage;
 
+    /*
     if (nextPolyworldMessage == currentPolyworldMessage) {
         QTimer::singleShot(0, this, SLOT(requestNewPolyworldMessage()));
         return;
     }
+    */
 
     currentPolyworldMessage = nextPolyworldMessage;
     statusLabel->setText(currentPolyworldMessage);
-    getPolyworldMessageButton->setEnabled(true);
+    //getPolyworldMessageButton->setEnabled(true);
 }
 
 void NetworkClient::displayError(QAbstractSocket::SocketError socketError)

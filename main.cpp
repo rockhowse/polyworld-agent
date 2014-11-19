@@ -13,10 +13,12 @@ int main(int argc, char *argv[])
     // only show this after we have connected
     polyWorldAgent.show();
 
+    /*
     Client client;
     client.start("127.0.0.1", 8888);
+    */
 
-    /*NetworkClient networkClient;
+    NetworkClient networkClient;
     networkClient.show();
 
     // update status from networkclient
@@ -25,6 +27,7 @@ int main(int argc, char *argv[])
     // init world from world file after client has downloaded it
     QObject::connect(&networkClient, SIGNAL(startWorldInit()), &polyWorldAgent, SLOT(initFromWorldFile()));
 
+    /*
     MulticastReceiver multicastReceiver;
     // multicastReceiver.show();
 
