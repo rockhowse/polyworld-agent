@@ -141,6 +141,8 @@ void NetworkClient::readFileData()
 
 void NetworkClient::readPolyworldMessage()
 {
+
+    /*
     QDataStream in(tcpSocket);
     in.setVersion(QDataStream::Qt_4_0);
 
@@ -164,8 +166,7 @@ void NetworkClient::readPolyworldMessage()
     }
     */
 
-    currentPolyworldMessage = nextPolyworldMessage;
-    statusLabel->setText(currentPolyworldMessage);
+    statusLabel->setText(QString(tcpSocket->readAll().data()));
     //getPolyworldMessageButton->setEnabled(true);
 }
 
